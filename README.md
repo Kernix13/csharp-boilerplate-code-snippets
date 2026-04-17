@@ -45,7 +45,7 @@ if (name is null) // Input stream ends (EOF = End Of File)
 // Option 2: null-coalescing operator
 string name = Console.ReadLine() ?? "";
 
-// null-forgiving operator
+// null-forgiving operator = "Yeah, I know"
 // Console.ReadLine()!
 int divisor = int.Parse(Console.ReadLine()!);
 ```
