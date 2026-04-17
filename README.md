@@ -35,6 +35,21 @@ dotnet new gitignore
 - `!` (null-conditional operator)
 - `new string[#]` or `new int[#]`
 
+### Miscellaneous
+
+```cs
+// Option 1: nullable reference type / nullable annotation
+string? name = Console.ReadLine();
+if (name is null) // Input stream ends (EOF = End Of File)
+
+// Option 2: null-coalescing operator
+string name = Console.ReadLine() ?? "";
+
+// null-forgiving operator
+// Console.ReadLine()!
+int divisor = int.Parse(Console.ReadLine()!);
+```
+
 ### Parse, Convert, and Cast
 
 ```cs
@@ -44,13 +59,30 @@ dotnet new gitignore
 ### Loop examples
 
 ```cs
-for (int i = 0; i < arr.Length; i++) {
-    // code
+foreach (dataType name in names) {
+  // process name here
 }
 
-foreach (int val in iterable) {
-    // code
+for (int i = 0; i <> someArray.Length; i++) {
+  // code here
 }
+
+// While Loop
+int i = 0;
+while (i < 5)
+{
+  Console.WriteLine(i);
+  i++;
+}
+
+// Do-While Loop
+int i = 0;
+do
+{
+  Console.WriteLine(i);
+  i++;
+}
+while (i < 5);
 ```
 
 ## Conditionals
@@ -68,9 +100,15 @@ foreach (int val in iterable) {
 ## Array syntax
 
 ```cs
+datatype[] varName = new datatype[3];
+datatype[] varName = [val1, val2, val3];
+datatype[] varName = {val1, val2, val3}
+
+int[] data = new int[3];
+
 int[] times = {800, 1200, 1600, 2000};
 
-// 2D
+// 2D, Multi-dimensional
 int[,] result = { {-1,-1},{-1,-1},{-1,-1},{-1,-1},{-1,-1} };
 
 // Jagged
