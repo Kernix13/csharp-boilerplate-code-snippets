@@ -22,29 +22,17 @@ More in-depth description of prohect than the intro paragraph
 1. Clone this repository and switch into project folder
 
    ```sh
-   git clone https://github.com/Kernix13/REPO_NAME
+   git clone https://github.com/USER_NAME/REPO_NAME
    cd REPO_NAME
    ```
 
-2. Create a solution file
-
-   ```sh
-   dotnet new sln
-   ```
-
-3. Link the project to the solution
-
-   ```sh
-   dotnet sln add REPO_NAME.csproj
-   ```
-
-4. Run the application
+2. Run the application
 
    ```bash
    dotnet run
    ```
 
-5. Build the application
+3. Build the application
 
    ```bash
    dotnet build
@@ -55,19 +43,14 @@ More in-depth description of prohect than the intro paragraph
 <!-- I t hink h3 elements should have an emoji/icon at the beginning -->
 
 ```sh
-git clone https://github.com/Kernix13/REPO_NAME
+git clone https://github.com/USER_NAME/REPO_NAME
 cd REPO_NAME
-dotnet new sln
-dotnet sln add REPO_NAME.csproj
 dotnet run
 ```
 
 <br>
 
-## Other H2 sections that make sense for console projects
-
-### Related H3 sections
-
+> Other H2 & H3 sections that make sense for console projects:
 > See [csharp-template.md](https://github.com/Kernix13/cy-pathway-readmes/blob/main/csharp-template.md) for more sections if your console app has more features to it.
 
 ## H3 Emoji list
