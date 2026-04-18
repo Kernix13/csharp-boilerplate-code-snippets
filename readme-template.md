@@ -6,7 +6,7 @@ Intro paragraph here, between 120-158 characters
 
 ## Overview
 
-More in-depth description of prohect than the intro paragraph
+More in-depth description of the project than the intro paragraph
 
 <br>
 
