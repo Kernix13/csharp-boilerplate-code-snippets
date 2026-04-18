@@ -70,67 +70,64 @@ dotnet run
 
 > See [csharp-template.md](https://github.com/Kernix13/cy-pathway-readmes/blob/main/csharp-template.md) for more sections if your console app has more features to it.
 
-<!--
+## H3 Emoji list
 
-### / H3 Emoji list
+For large READMEs I have a Table of Contents and include H3 sections unless the TOC is very large, then I just include H2 headings in the TOC. If I have a TOC then I also have a back-to-top "button" aligned to the right so that gives me some spacing.
 
+I use `<br>` to add spacing between `h2` sections, but I do not want to do that for `h3` sections. However, I would like to make the H3 headings stand out, so that is where I will prefix the H3 text with an emoji. Here is a good starter list:
+
+```
 ⚡Action / getting started
    ⚡ Quick Start (perfect choice already)
-   ⚙️ Setup / Configuration
-   💻 Usage / Commands
+   ⚙️ Setup / Configuration / Settings
+   💻 Usage / Commands / Virtual Environment
+   🛠️  Tooling / debugging / Troubleshooting
+   🔧, 🔨 Repair, maintenance, construction
 
 📚 Information / reference
    📌 Key info / notes
    📄 Documentation details
    ℹ️ General info
-   🧩 Concepts / components
+   🧩 Concepts / Component / piece of logic
 
-🚨 Errors / problems
+🚨 Errors / problems / alert
    ⚠️ Warning
-   ❗ Important
    🛠️ Troubleshooting
    ❌ Errors
    🚫 Something went wrong
    🛑 Stop (stronger emphasis)
+   🔔, ⌛ Alert / alarm / time-dependent
 
 🔗 External stuff
-   🔗 Resources (your standard)
-   📎 Examples / attachments
+   🔗 Resources
+   📎 Examples / attachments / docs
    🌐 live deploy / website
 
 🎯 Insight / emphasis
    🎯 Key takeaway / best practice
    💡 Ideas / tips
-================
+   ❗ Important
 
-default subsection
-🔹 Small blue diamond → clean, minimal section marker
-🔷 Large Blue Diamond
-🔸 Small Orange Diamond
-🔶 Large Orange Diamond
-▪️ Small square → even more subtle
+Specific
+   ✨ or 🚀 Features
+   🚧 WIP
+   🐛 Bug fix
+   🎯 Bullseye: Key takeaway, Focus point, Goal/Target outcome
+   📌,📍 Point of focus or To-Do
+   ✅, ☑️, ✔️ - Done / complete
+   📄, 📝 Docs
+   🔍 → implies search
+   💡 → ideas
+   ℹ️ info
+   👥 Contributors
+   ❓, 🧐  Questions/Issues
+   💖,💚, 💙, 💜, Sponsorship / Like
+   👉, ➡️ Look here
 
-More H2 but I will only use these on H3's
-🧩 Component / piece of logic
-⚙️ Setup / Settings
-💻 Virtual Environment / Display maybe / Usage commands
-🛠️ Tooling / debugging / Troubleshooting
-
-✨ or 🚀 Features
-🚧 WIP
-🐛 Bug fix
-🎯 Bullseye: Key takeaway, Focus point, Goal/Target outcome
-📌 or 📍 Point of focus or To-Do
-✅ or ☑️ or ✔️ - Done / complete
-📄 or 📝 Docs
-🔗 Links
-📎 Attached detail / example
-🌐 web / website
-🔍 → implies search
-💡 → ideas
-ℹ️ info
-👥 Contributors
-❓ or 🧐  Questions/Issues
-💖 Sponsorship
-
- -->
+Generic
+   🔹 Small blue diamond → clean, minimal section marker
+   🔷 Large Blue Diamond
+   🔸 Small Orange Diamond
+   🔶 Large Orange Diamond
+   ▪️ Small square → even more subtle
+```
