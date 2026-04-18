@@ -2,9 +2,9 @@
 
 Code snippets and important syntax for important code blocks in C#.
 
-## Snippets
+<br>
 
-### Shell commands
+## Shell commands
 
 Here are the most common/useful in the beginning of learning C#
 
@@ -28,14 +28,18 @@ dotnet sln add MyProjectName.csproj
 dotnet new gitignore
 ```
 
-### Terms or Keywords to learn
+<br>
+
+## Terms or Keywords to learn
 
 - `void`
 - `static`
 - `!` (null-conditional operator)
 - `new string[#]` or `new int[#]`
 
-### Miscellaneous
+<br>
+
+## Miscellaneous
 
 ```cs
 // Option 1: nullable reference type / nullable annotation
@@ -50,13 +54,17 @@ string name = Console.ReadLine() ?? "";
 int divisor = int.Parse(Console.ReadLine()!);
 ```
 
-### Parse, Convert, and Cast
+<br>
+
+## Parse, Convert, and Cast
 
 ```cs
 // Convert.ToInt32, int.Parse vs int.TryParse(strVar, out numVar)
 ```
 
-### Loop examples
+<br>
+
+## Loop examples
 
 ```cs
 foreach (dataType name in names) {
@@ -85,6 +93,8 @@ do
 while (i < 5);
 ```
 
+<br>
+
 ## Conditionals
 
 ```cs
@@ -96,6 +106,8 @@ while (i < 5);
 
 // switch
 ```
+
+<br>
 
 ## Array syntax
 
@@ -113,6 +125,10 @@ int[,] result = { {-1,-1},{-1,-1},{-1,-1},{-1,-1},{-1,-1} };
 
 // Jagged
 ```
+
+<br>
+
+## Exceptions and errors
 
 ### try/catch
 
@@ -138,10 +154,20 @@ catch (DivideByZeroException ex)
 }
 ```
 
-### Methods
+<br>
+
+## Methods
 
 ```cs
 void MethodName() {}
 int MethodName(int paramName) {}
 string MethodName(string paramName, string param2 = "Hello") {}
+```
+
+<br>
+
+## Classes
+
+```cs
+// syntax here
 ```
