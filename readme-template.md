@@ -40,7 +40,7 @@ More in-depth description of the project than the intro paragraph
    dotnet build
    ```
 
-### ⚡ Quick Start
+### <span aria-hidden="true">⚡</span> Quick Start
 
 <!-- I t hink h3 elements should have an emoji/icon at the beginning -->
 
@@ -59,7 +59,18 @@ dotnet run
 
 For large READMEs I have a Table of Contents and include H3 sections unless the TOC is very large, then I just include H2 headings in the TOC. If I have a TOC then I also have a back-to-top "button" aligned to the right so that gives me some spacing.
 
-I use `<br>` to add spacing between `h2` sections, but I do not want to do that for `h3` sections. However, I would like to make the H3 headings stand out, so that is where I will prefix the H3 text with an emoji. Here is a good starter list:
+I use `<br>` to add spacing between `h2` sections, but I do not want to do that for `h3` sections. However, I would like to make the H3 headings stand out, so that is where I will prefix the H3 text with an emoji. But here is how you shouls use a `<br>` element:
+
+- `<span aria-hidden="true"><br></span>`
+
+Screen readers will read the emoji's "Alt Text" name first
+
+- Example: ### 🔍 Analysis Method
+- What a Screen Reader says: "Heading Level 3: Magnifying glass tilted left Analysis Method"
+- The Fix: Wrap the emoji in a `<span>` with an `aria-hidden="true"` attribute. This hides the emoji from screen readers while keeping it visible for your sighted users
+  - `<span aria-hidden="true">🗃️</span>`
+
+Here is a good starter list:
 
 ```
 ⚡Action / getting started
