@@ -2,6 +2,8 @@
 
 Intro paragraph here, between 120-158 characters
 
+<!-- Google: "sample readme for a c# console application" for good boilerplate -->
+
 <br>
 
 ## Overview
@@ -106,6 +108,9 @@ Specific
    ❓, 🧐  Questions/Issues
    💖,💚, 💙, 💜, Sponsorship / Like
    👉, ➡️ Look here
+   📊 📈 📶 📉 Analysis
+   📢 Announcement
+   🚩 Not sures
 
 Generic
    🔹 Small blue diamond → clean, minimal section marker
