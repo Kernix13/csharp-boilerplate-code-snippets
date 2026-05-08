@@ -53,7 +53,6 @@ NOTE: `-- Term` means "Term" is a method or property for the item above it.
 | -- break                 |
 | -- default               |
 | ? :                      |
-|                          |
 
 ......................................................................
 
@@ -131,8 +130,6 @@ ALSO USED:
 | new keyword          |
 | readonly             |
 | this keyword         |
-|                      |
-|                      |
 
 ......................................................................
 
