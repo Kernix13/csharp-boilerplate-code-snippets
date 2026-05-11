@@ -2,6 +2,8 @@
 
 Code snippets and important syntax for important code blocks in C#.
 
+> I have not updated this README much but the 2 "tables" markdown files list methods/properties actually used in Microsoft Learn exercises and list of methods not used in MS Learn. Use those files to focus on the syntax to learn and use.
+
 <br>
 
 ## Shell commands
