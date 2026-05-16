@@ -656,8 +656,109 @@ foreach (var tag in uniqueTags)
 ## Enum and struct and record
 
 ```cs
+/* 📌 Enum */
+enum OrderStatus
+{
+    Pending,
+    Shipped,
+    Delivered,
+    Cancelled
+}
 
+enum Season
+{
+    Spring,
+    Summer,
+    Autumn,
+    Winter
+}
+
+public enum FileMode {
+    CreateNew = 1,
+    Create = 2,
+    Open = 3,
+    OpenOrCreate = 4,
+    Truncate = 5,
+    Append = 6,
+}
+
+enum ErrorCode : ushort
+{
+    None = 0,
+    Unknown = 1,
+    ConnectionLost = 100,
+    OutlierReading = 200
+}
+
+/* 📌 struct */
+public struct Point
+{
+    public int X;
+    public int Y;
+
+    public Point(int x, int y)
+    {
+        X = x;
+        Y = y;
+    }
+}
+
+public struct Rectangle
+{
+    private int width;
+    private int height;
+
+    public Rectangle(int width, int height)
+    {
+        // Whys this? I don't often see that
+        this.width = width;
+        this.height = height;
+    }
+
+    public int Area => width * height;
+}
+
+/* 📌 record */
+public record Product(string Name, decimal Price)
+{
+    public override int GetHashCode() => HashCode.Combine(Name.ToLower(), Price);
+}
+
+public record AccountHolderDetails(string Name, string CustomerId, string Address);
+
+// inheritance
+public record Animal(string Name);
+public record Dog(string Name, string Breed) : Animal(Name);
+
+var dog = new Dog("Buddy", "Golden Retriever");
+Console.WriteLine(dog); // Output: Dog { Name = Buddy, Breed = Golden Retriever }
 ```
+
+- Use `enums` in C# to define named constants and prevent invalid values.
+- Work with `structs` in C# to encapsulate related data into lightweight containers.
+- Create `records` in C# to model immutable data and ensure consistency.
+- By default, the underlying type of an `enum` is `int`, and the values start at `0`, incrementing by 1 for each member
+- Use singular nouns for simple enums and plural nouns for flag enums (?)
+- Provide a value of zero for simple enums, typically named `None`.
+- Structs are value types in C#: they directly store their data rather than referencing it
+- Structs are commonly used for representing lightweight data like geometric shapes, coordinates, or configuration settings
+- Structs are best suited for small, immutable, and performance-critical data
+- structs can't inherit from other structs or classes, but they can implement interfaces
+  - If your type focuses on behavior rather than data, classes are often a better choice due to their reference semantics
+- Encapsulation allows you to control access to the data within a struct. Use access modifiers like `private`, `public`, or `internal` to specify accessibility
+- When you apply the `readonly` modifier to a struct, you can enforce immutability
+- Records in C# provide a way to create immutable data models with value-based equality
+- Records automatically generate properties, constructors, and methods like ToString, Equals, and GetHashCode.
+- Records are useful for scenarios like modeling API responses, configuration settings, or logging events where immutability and simplicity are critical
+- Immutability: Records are immutable by default
+- Equality: Records use value-based equality, whereas classes use reference equality, and structs rely on value equality
+- Inheritance: Record classes support inheritance, but record structs don't (?)
+- When you compile your C# code, the compiler takes your record and actually turns it into a standard class
+- However, the compiler automatically injects custom `Equals()` and `==` code into that class so that it behaves like a value type when you compare them
+- Use records when you need immutable data models with value-based equality. For mutable or behavior-focused types, consider using classes instead.
+- Records are ideal for representing immutable data
+
+> `records` are really confusing!
 
 <br>
 
