@@ -204,6 +204,8 @@ String.Join("delimiter", someArray);
 
 ### try/catch
 
+See [csharp-exception-object-demo](https://github.com/Kernix13/csharp-exception-object-demo) for a specific example.
+
 ```cs
 // Generic Exception
 try
@@ -236,6 +238,7 @@ returnType MethodName() {
 }
 int MethodName(int paramName) {
     /* logic here */
+    return paramName;
 }
 void MethodName(string paramName, string param2 = "Hello") {
     /* logic here */
@@ -247,10 +250,119 @@ void MethodName(string paramName, string param2 = "Hello") {
 ## Classes
 
 ```cs
-// syntax here
+// remember to add namespace
+namespace ProjectName;
+// in Program.cs:
+using ProjectName;
+
+// Constructor expression body definition (single line):
+public Car(string model) => modelName = model;
+
+// field as an instance of another class (in Adoption):
+public Pet AdoptedPet { get; set; }
+
+// properties
+public int Name { get; set; }
+// or:
+private string? _name;
+public int Name {
+    get { return age; }
+    set { age = value; }
+}
+
+// initialize automatically implemented properties similarly to fields
+public string FirstName { get; set; } = "FirstName";
+
+// restrict the accessibility of the set accessor
+public static int TotalPets { get; private set; }
+
+// public class
+public class MyClass
+{
+    public string Name { get; set; }
+    // instance constructor
+    public MyClass(string name) {
+        Name = name;
+    }
+}
 ```
 
-## ???
+## Object Oriented Programming examples
+
+```cs
+namespace ProjectName;
+
+// interface
+public interface IPerson
+{
+    // Name & Age properties, DisplayInfo method signature
+    string Name { get; set; }
+    int Age { get; set; }
+
+    string DisplayInfo();
+}
+
+// Class implementing an interface
+public class MyClass : IPerson
+{
+    string Name { get; set; }
+    int Age { get; set; }
+
+    public MyClass(string name, int age) {
+        // property = parameter
+        Name = name;
+        Age = age
+    }
+
+    // use abstract or virtual in the base class
+    public virtual string DisplayInfo() {
+        return $"{Name}, {Age}";
+    }
+}
+
+// inherit a class
+public class DerivedClass : MyClass
+{
+    public DerivedClass(string name, int age) : base(Name, Age)
+    {
+        // You don't need to write any code inside the brackets { }
+        // because the base constructor already handled it!
+    }
+
+    // use override to do your owm version
+    public override string DisplayInfo()
+    {
+        return $"My name is {Name} & I am {Age} years old";
+    }
+}
+
+/* in Program.cs */
+using ProjectName;
+
+// Polymorphism via interface
+IPerson person1 = new DerivedClass("Luna", 12);
+Console.WriteLine(person1.DisplayInfo());
+
+// Polymorphism via inheritance
+MyClass person2 = new DerivedClass("Buddy", 10);
+Console.WriteLine(person2.DisplayInfo());
+```
+
+Use the following access modifiers to specify the accessibility of a type or member when you declare it:
+
+- `public`: Code in any assembly can access this type or member. The accessibility level of the containing type controls the accessibility level of public members of the type.
+- `private`: Only code declared in the same class or struct can access this member.
+- `protected`: Only code in the same class or in a derived class can access this type or member.
+- `internal`: Only code in the same assembly can access this type or member.
+- `protected internal`: Only code in the same assembly or in a derived class in another assembly can access this type or member.
+- `private protected`: Only code in the same assembly and in the same class or a derived class can access the type or member.
+- `file`: Only code in the same file can access the type or member.
+
+The `record` modifier on a type causes the compiler to synthesize extra members.
+
+The `record` modifier doesn't affect the default accessibility for either a `record class` or a `record struct`.
+
+NOTE: **The static member is always accessed by the class name, not the instance name**
 
 <br>
 
