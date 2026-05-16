@@ -22,6 +22,8 @@ Code snippets and important syntax for important code blocks in C#.
 1. [File IO](#file-io)
 1. [JsonSerializer](#jsonserializer)
 1. [Dates and times](#dates-and-times)
+1. [List and HashSet and Dictionary](#list-and-hashset-and-dictionary)
+1. [Enum and struct and record](#enum-and-struct-and-record)
 1. [Terms or Keywords to learn](#terms-or-keywords-to-learn)
 1. [](#)
 
