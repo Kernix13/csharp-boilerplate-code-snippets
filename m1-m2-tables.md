@@ -54,6 +54,8 @@ NOTE: `-- Term` means "Term" is a method or property for the item above it.
 | -- default               |
 | ? :                      |
 
+- `string` is a reference type
+
 ......................................................................
 
 ## Module 2 Week 1
@@ -101,9 +103,9 @@ ALSO USED:
 | OverflowException          |
 | static method              |
 | Exception class            |
-| -- Message                 |
-| -- Name                    |
-| -- Source                  |
+| --Message                  |
+| --Name                     |
+| --Source                   |
 | foreach                    |
 | Length                     |
 
