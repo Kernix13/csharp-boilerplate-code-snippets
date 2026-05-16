@@ -2,7 +2,22 @@
 
 Code snippets and important syntax for important code blocks in C#.
 
-> I have not updated this README much but the 2 "tables" markdown files list methods/properties actually used in Microsoft Learn exercises and list of methods not used in MS Learn. Use those files to focus on the syntax to learn and use.
+> Check the other markdown files for more examples.
+
+## Table of contents
+
+1. [Shell commands](#shell-commands)
+1. [Miscellaneous](#miscellaneous)
+1. [Parse, Convert, and Cast](#parse-convert-and-cast)
+1. [Loop examples](#loop-examples)
+1. [Conditionals](#conditionals)
+1. [String methods](#string-methods)
+1. [Array syntax](#array-syntax)
+1. [Exceptions and errors](#exceptions-and-errors)
+1. [Methods](#methods)
+1. [Classes](#classes)
+1. [Terms or Keywords to learn](#terms-or-keywords-to-learn)
+1. [](#)
 
 <br>
 
@@ -29,15 +44,6 @@ dotnet sln add MyProjectName.csproj
 # 5. Add a professional gitignore
 dotnet new gitignore
 ```
-
-<br>
-
-## Terms or Keywords to learn
-
-- `void`
-- `static`
-- `!` (null-conditional operator)
-- `new string[#]` or `new int[#]`
 
 <br>
 
@@ -225,9 +231,15 @@ catch (DivideByZeroException ex)
 ## Methods
 
 ```cs
-void MethodName() {}
-int MethodName(int paramName) {}
-string MethodName(string paramName, string param2 = "Hello") {}
+returnType MethodName() {
+    /* logic here */
+}
+int MethodName(int paramName) {
+    /* logic here */
+}
+void MethodName(string paramName, string param2 = "Hello") {
+    /* logic here */
+}
 ```
 
 <br>
@@ -241,3 +253,10 @@ string MethodName(string paramName, string param2 = "Hello") {}
 ## ???
 
 <br>
+
+## Terms or Keywords to learn
+
+- `void`
+- `static`
+- `!` (null-conditional operator)
+- `new string[#]` or `new int[#]`
