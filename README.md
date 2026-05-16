@@ -514,13 +514,140 @@ Console.WriteLine("Week of the year for December 31, 2023: " + weekOfYear);
 - Use `TimeSpan` to calculate the difference between two `DateTime` values or to measure elapsed time with the `Stopwatch.Elapsed` property.
 - use `DateTimeOffset` to log times with UTC offsets, `TimeZoneInfo` to convert between time zones, and `TimeSpan` to work with time intervals
 
+<div align="right">&#8673; <a href="#back-to-top" title="Table of Contents">Back to Top</a></div>
+
 <br>
 
 ## List and HashSet and Dictionary
 
 ```cs
+/* 📌 List<T> */
+List<string> books = new List<string>(); // T is string
+books.Add("Book A"); // Add a string to the list
+books.Add("Book B");
+books.Add("Book C");
+books.Remove("Book A"); // Remove a specific string from the list
 
+foreach (string book in books) // Iterate through the list
+{
+    Console.WriteLine(book);
+}
+// Book B
+// Book C
+
+// With classes
+public class Student
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+}
+
+List<Student> students = new List<Student>
+{
+    new Student { Name = "Haneul", Age = 20 },
+    new Student { Name = "Magda", Age = 22 }
+};
+
+students.Add(new Student { Name = "Dale", Age = 23 });
+students.RemoveAt(0); // follow this with a foreach block
+
+/* 📌 Dictionary<T> */
+var students = new Dictionary<int, string>
+{
+    { 101, "Ji-min Jo" },
+    { 102, "Catalina Blaga" }
+};
+
+students.Add(103, "Milan Golob"); // Add a new key-value pair
+
+foreach (var kvp in students)
+{
+    Console.WriteLine($"Key: {kvp.Key}, Value: {kvp.Value}");
+}
+// Expected output:
+// Key: 101, Value: Ji-min Jo
+// Key: 102, Value: Catalina Blaga
+// Key: 103, Value: Milan Golob
+
+// Retrieving values: Access values using the key
+var students = new Dictionary<int, string>
+{
+    { 101, "Ji-min Jo" },
+    { 102, "Catalina Blaga" }
+};
+
+var student = students[101];
+Console.WriteLine(student); // Outputs "Ji-min Jo"
+
+// Use a foreach loop to iterate through the dictionary
+var students = new Dictionary<int, string>
+{
+    { 101, "Ji-min Jo" },
+    { 102, "Catalina Blaga" },
+    { 103, "Milan Golob" }
+};
+
+foreach (var kvp in students)
+{
+    Console.WriteLine($"Key: {kvp.Key}, Value: {kvp.Value}");
+}
+
+/* 📌 HashSet<T> */
+HashSet<string> names = new HashSet<string>();
+names.Add("Haneul");
+names.Add("Magda");
+names.Add("Mia");
+names.Add("Mia"); // Duplicate, won't be added
+
+foreach (string name in names) {
+    Console.WriteLine(name);
+}
+// Output (order may vary):
+// Haneul
+// Magda
+// Mia
+
+// To check if an item exists in the collection, use the `Contains` method
+HashSet<string> names = new HashSet<string>();
+names.Add("Haneul");
+names.Add("Magda");
+
+if (names.Contains("Haneul")) {
+    Console.WriteLine("Haneul is in the collection.");
+}
+
+// 1. Initialization
+HashSet<string> uniqueTags = new HashSet<string>();
+
+// 2. Adding items (.Add returns a bool indicating success)
+uniqueTags.Add("C#");
+uniqueTags.Add("Programming");
+
+// This will be completely ignored because "C#" already exists
+bool wasAdded = uniqueTags.Add("C#");
+
+Console.WriteLine($"Was duplicate added? {wasAdded}"); // Output: False
+Console.WriteLine($"Total Count: {uniqueTags.Count}");  // Output: 2
+
+// 3. High-performance lookup
+if (uniqueTags.Contains("C#"))
+{
+    Console.WriteLine("Tag found instantly!");
+}
+
+// 4. Iteration works just like a List, but order is NOT guaranteed
+foreach (var tag in uniqueTags)
+{
+    Console.WriteLine(tag);
+}
 ```
+
+- `HashSet<T>` ensures that all elements in the collection are unique and _unordered_
+- `HashSet<T>` automatically prevents duplicate entries
+- `Dictionary<TKey, TValue>`: ideal for scenarios requiring fast lookups based on unique identifiers
+  - is part of the System.Collections.Generic namespace
+  - Keys must be unique within the dictionary.
+  - Values can be of any type, including custom objects.
 
 <br>
 
