@@ -434,6 +434,8 @@ See [csharp-JsonSerializer-example](https://github.com/Kernix13/csharp-JsonSeria
 
 <br>
 
+<p align="center">.............. <strong>MODULE 3 STARTS HERE</strong> ..............</p>
+
 ## Dates and times
 
 ```cs
