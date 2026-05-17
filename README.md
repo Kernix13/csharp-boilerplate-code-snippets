@@ -609,6 +609,7 @@ foreach (var kvp in students)
 }
 ```
 
+- Note `.Key` and `.Value` - are they keywords?
 - `Dictionary<TKey, TValue>`: ideal for scenarios requiring fast lookups based on unique identifiers
   - is part of the System.Collections.Generic namespace
   - Keys must be unique within the dictionary.
@@ -668,6 +669,7 @@ foreach (var tag in uniqueTags)
 
 - `HashSet<T>` ensures that all elements in the collection are unique and _unordered_
 - `HashSet<T>` automatically prevents duplicate entries
+- .Contains, .Add, .Count
 
 <div align="right">&#8673; <a href="#back-to-top" title="Table of Contents">Back to Top</a></div>
 
@@ -694,6 +696,7 @@ enum Season
     Winter
 }
 
+// Set underlying types and values for enums
 public enum FileMode {
     CreateNew = 1,
     Create = 2,
@@ -712,7 +715,7 @@ enum ErrorCode : ushort
 }
 ```
 
-- Use `enums` in C# to define named constants and prevent invalid values.
+- Use `enums` in C# to define named constants and prevent invalid values (?)
 - By default, the underlying type of an `enum` is `int`, and the values start at `0`, incrementing by 1 for each member
 - Use singular nouns for simple enums and plural nouns for flag enums (?)
 - Provide a value of zero for simple enums, typically named `None`.
@@ -756,6 +759,8 @@ public struct Rectangle
   - If your type focuses on behavior rather than data, classes are often a better choice due to their reference semantics
 - Encapsulation allows you to control access to the data within a struct. Use access modifiers like `private`, `public`, or `internal` to specify accessibility
 - When you apply the `readonly` modifier to a struct, you can enforce immutability
+
+> Structs are worth diving deeper into and incorporating into a project
 
 ### record
 
@@ -856,6 +861,7 @@ var products = new List<Product>
 products.Sort(new ProductComparer());
 ```
 
+- .CompareTo, .Sort
 - Generic interfaces are a key feature of advanced generics, allowing you to define type-safe contracts for implementing classes
 - Some commonly used generic interfaces in .NET include:
   - `IEnumerable<T>`: Represents a collection of objects that can be enumerated
@@ -881,28 +887,32 @@ Action<string> handleString = handleObject;
 - Contravariance: Allows you to assign a more general type (base type) to a more specific type (derived type).
   - Think of it like using a handler for any fruit (`Action<Fruit>`) to process only apples (`Action<Apple>`).
 
+> Confusing
+
 ### Anonymous types
 
+These looks like a basic object or object literal but usint the `new` keyword. Are they dictionaries?
+
 ```cs
+// how to create an anonymous type
+// 1.
 var v = new { Amount = 108, Message = "Hello" };
 Console.WriteLine($"{v.Amount} - {v.Message}");
+// 2.
+var person = new { Name = "John", Age = 30 };
+// 3.
+var product = new { Name = "Laptop", Price = 1200 };
+Console.WriteLine($"Product: {product.Name}, Price: {product.Price}");
+// 4.
+var customer = new { Name = "Mario Rogers", Age = 30 };
+Console.WriteLine($"Customer: {customer.Name}, Age: {customer.Age}");
 
 // object initializer example
 Cat myCat = new Cat { Name = "Fluffy", Age = 10 };
-// Anonymous Type
-var person = new { Name = "John", Age = 30 };
-
-// how to create an anonymous type
-var product = new { Name = "Laptop", Price = 1200 };
-Console.WriteLine($"Product: {product.Name}, Price: {product.Price}");
-
-// anonymous type used to group data temporarily
-var customer = new { Name = "Mario Rogers", Age = 30 };
-Console.WriteLine($"Customer: {customer.Name}, Age: {customer.Age}");
 ```
 
 - Anonymous types in C# let you group related data into a temporary object without defining a full class
-  - They allow you to create objects with read-only properties
+  - They allow you to create objects with _read-only properties_
 - Anonymous types are created using the `new` operator and object initializers
   - object initializer: Instead of calling a constructor and then writing multiple assignment statements, you can set properties within a single expression
 - They're commonly used in Language-Integrated Query (LINQ) queries to return subsets of properties from objects
@@ -937,7 +947,7 @@ foreach (var product in filteredProducts)
 
 ## Asynchronous programming
 
-typical areas where asynchronous programming improves responsiveness:
+Typical areas where asynchronous programming improves responsiveness:
 
 - Web access: `HttpClient` - `Windows.Web.Http.HttpClient`, `SyndicationClient`
 - Working with files: `JsonSerializer`, `StreamReader`, `StreamWriter`, etc. - StorageFile
@@ -950,12 +960,11 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-// public static async Task Main() is a problem:
-// I never have Main in Program.cs!!!
+// I never have Main in Program.cs! See below
 public static async Task Main()
 {
     string filePath = "example.txt";
-    string content = await ReadFileAsync(filePath);
+    string content = await ReadFileAsync(filePath); // really bad name!
     Console.WriteLine(content);
 }
 
@@ -981,9 +990,8 @@ public class Account
 
 public class Program
 {
-    public static async Task Main() // WFT with Main?
+    public static async Task Main() // Main again?
     {
-        // Combine a directory and file name, then create the directory if it doesn't exist
         string directoryPath = @"C:\TempDir";
         if (!Directory.Exists(directoryPath))
         {
@@ -1027,8 +1035,11 @@ using (HttpClient client = new HttpClient()) {
     try {
         // PetStore API endpoint
         string url = "https://petstore.swagger.io/v2/pet/findByStatus?status=available";
+        // GET request to endpoint:
         HttpResponseMessage response = await client.GetAsync(url);
+        // Throws exception if code is NOT 200-299:
         response.EnsureSuccessStatusCode();
+        // Catch the response JSON/value:
         string responseBody = await response.Content.ReadAsStringAsync();
         // Console.WriteLine($"Response: {responseBody}");
 
@@ -1070,27 +1081,36 @@ public class Tag {
 - The asynchronous operations are typically implemented using the `Task` or `Task<T>` types, which represent an ongoing operation that can be awaited
 - The `Task<string>` type is a generic task that represents an asynchronous operation that returns a string value
 - The `Task` or `Task<T>` types represent ongoing operations that can be awaited in C#.
+- The `using` statement ensures that the `HttpClient` instance is disposed of properly after use, releasing any resources it holds
+- File input and output (file I/O) can be performed synchronously or asynchronously
+- Asynchronous file I/O is particularly useful for improving application performance and responsiveness
+- The `System.IO` and `System.Text.Json` namespaces provide classes and methods for performing file I/O operations asynchronously
+- the `System.ComponentModel` namespace provides classes and interfaces used to implement the run-time and design-time behavior of components and controls
+- `EnsureSuccessStatusCode()` is a method on the `HttpResponseMessage` class that throws an `HttpRequestException` if the HTTP response's status code falls outside the 200-299 range (success)
+  - verify that a request was successful before you attempt to process the response body
+  - the exception message typically includes the status code that caused the failure
+
+The `Main` method:
+
 - The `Main` method is also defined as asynchronous, allowing it to call the `ReadFileAsync` method using the `await` keyword
   - **_I never have a Main method in my projects?!?_**
 - When you use top-level statements, the compiler automatically assumes the hidden, behind-the-scenes Main method is async the moment you use the `await` keyword in your file
-- file input and output (file I/O) can be performed synchronously or asynchronously
-- Asynchronous file I/O is particularly useful for improving application performance and responsiveness
-- The `System.IO` and `System.Text.Json` namespaces provide classes and methods for performing file I/O operations asynchronously
 
-The HTTPClient class includes the following asynchronous methods:
+The `HTTPClient` class includes the following asynchronous methods:
 
 - `GetAsync`: Sends a GET request to the specified URI and returns the response.
 - `PostAsync`: Sends a POST request to the specified URI with the specified content and returns the response.
 - `PutAsync`: Sends a PUT request to the specified URI with the specified content and returns the response.
 - `DeleteAsync`: Sends a DELETE request to the specified URI and returns the response.
 - `SendAsync`: Sends an HTTP request message and returns the response.
-- The `using` statement ensures that the `HttpClient` instance is disposed of properly after use, releasing any resources it holds
 
 <div align="right">&#8673; <a href="#back-to-top" title="Table of Contents">Back to Top</a></div>
 
 <br>
 
 ## Terms or Keywords to learn
+
+> This section is old - update it!
 
 - `void`
 - `static`
