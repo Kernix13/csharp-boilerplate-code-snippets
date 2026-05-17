@@ -391,7 +391,8 @@ Use the following access modifiers to specify the accessibility of a type or mem
 - `file`: Only code in the same file can access the type or member.
 - The `record` modifier on a type causes the compiler to synthesize extra members.
 - The `record` modifier doesn't affect the default accessibility for either a `record class` or a `record struct`.
-- The `abstract` keyword: members are incomplete and must be implemented in derived classes
+- The `abstract` keyword: the class or members are incomplete and must be implemented in derived classes
+  - You can not instantiate an object from an abstract class
 - The `virtual` keyword: to define methods and properties that can be overridden in derived classes
 - The `override` keyword: to override properties and methods that are inherited from the base class
 - Use the `base` keyword to access the base class implementation from the overridden member in the derived class
@@ -535,6 +536,9 @@ Console.WriteLine("Week of the year for December 31, 2023: " + weekOfYear);
 ### `List<T>`
 
 ```cs
+using System;
+using System.Collections.Generic;
+
 List<string> books = new List<string>(); // T is string
 books.Add("Book A"); // Add a string to the list
 books.Add("Book B");
