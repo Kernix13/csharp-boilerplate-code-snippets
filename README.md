@@ -24,6 +24,7 @@ Code snippets and important syntax for important code blocks in C#.
 1. [Dates and times](#dates-and-times)
 1. [List and HashSet and Dictionary](#list-and-hashset-and-dictionary)
 1. [Enum and struct and record](#enum-and-struct-and-record)
+1. [Generics and anonymous types](#generics-and-anonymous-types)
 1. [Terms or Keywords to learn](#terms-or-keywords-to-learn)
 1. [](#)
 
@@ -255,10 +256,12 @@ catch (DivideByZeroException ex)
 returnType MethodName() {
     /* logic here */
 }
+
 int MethodName(int paramName) {
     /* logic here */
     return paramName;
 }
+
 void MethodName(string paramName, string param2 = "Hello") {
     /* logic here */
 }
@@ -277,7 +280,7 @@ using ProjectName;
 // Constructor expression body definition (single line):
 public Car(string model) => modelName = model;
 
-// field as an instance of another class (in Adoption):
+// field as an instance of another class:
 public Pet AdoptedPet { get; set; }
 
 // properties
@@ -304,6 +307,10 @@ public class MyClass
         Name = name;
     }
 }
+
+// method (FullAddress) from another class (Address)
+public Address HomeAddress { get; set; }
+public string FullAddress => HomeAddress.FormatAddress();
 ```
 
 <div align="right">&#8673; <a href="#back-to-top" title="Table of Contents">Back to Top</a></div>
@@ -410,7 +417,7 @@ if (user is NewUser CurrentUser) {
 
 ## File IO
 
-See [csharp-system-io-classes](https://github.com/Kernix13/csharp-system-io-classes) for examples of PAth, Directory, FileInfo, and File examples in `Program.cs` and in `README.md`.
+See [csharp-system-io-classes](https://github.com/Kernix13/csharp-system-io-classes) for examples of Path, Directory, FileInfo, and File examples in `Program.cs` and in `README.md`.
 
 ```cs
 // Add examples for StreamReader and StreamWriter later
@@ -522,8 +529,9 @@ Console.WriteLine("Week of the year for December 31, 2023: " + weekOfYear);
 
 ## List and HashSet and Dictionary
 
+### `List<T>`
+
 ```cs
-/* 📌 List<T> */
 List<string> books = new List<string>(); // T is string
 books.Add("Book A"); // Add a string to the list
 books.Add("Book B");
@@ -552,8 +560,11 @@ List<Student> students = new List<Student>
 
 students.Add(new Student { Name = "Dale", Age = 23 });
 students.RemoveAt(0); // follow this with a foreach block
+```
 
-/* 📌 Dictionary<T> */
+### `Dictionary<T>`
+
+```cs
 var students = new Dictionary<int, string>
 {
     { 101, "Ji-min Jo" },
@@ -593,8 +604,16 @@ foreach (var kvp in students)
 {
     Console.WriteLine($"Key: {kvp.Key}, Value: {kvp.Value}");
 }
+```
 
-/* 📌 HashSet<T> */
+- `Dictionary<TKey, TValue>`: ideal for scenarios requiring fast lookups based on unique identifiers
+  - is part of the System.Collections.Generic namespace
+  - Keys must be unique within the dictionary.
+  - Values can be of any type, including custom objects.
+
+### `HashSet<T>`
+
+```cs
 HashSet<string> names = new HashSet<string>();
 names.Add("Haneul");
 names.Add("Magda");
@@ -646,17 +665,14 @@ foreach (var tag in uniqueTags)
 
 - `HashSet<T>` ensures that all elements in the collection are unique and _unordered_
 - `HashSet<T>` automatically prevents duplicate entries
-- `Dictionary<TKey, TValue>`: ideal for scenarios requiring fast lookups based on unique identifiers
-  - is part of the System.Collections.Generic namespace
-  - Keys must be unique within the dictionary.
-  - Values can be of any type, including custom objects.
 
 <br>
 
 ## Enum and struct and record
 
+### enum
+
 ```cs
-/* 📌 Enum */
 enum OrderStatus
 {
     Pending,
@@ -689,8 +705,16 @@ enum ErrorCode : ushort
     ConnectionLost = 100,
     OutlierReading = 200
 }
+```
 
-/* 📌 struct */
+- Use `enums` in C# to define named constants and prevent invalid values.
+- By default, the underlying type of an `enum` is `int`, and the values start at `0`, incrementing by 1 for each member
+- Use singular nouns for simple enums and plural nouns for flag enums (?)
+- Provide a value of zero for simple enums, typically named `None`.
+
+### struct
+
+```cs
 public struct Point
 {
     public int X;
@@ -717,8 +741,20 @@ public struct Rectangle
 
     public int Area => width * height;
 }
+```
 
-/* 📌 record */
+- Work with `structs` in C# to encapsulate related data into lightweight containers.
+- Structs are value types in C#: they directly store their data rather than referencing it
+- Structs are commonly used for representing lightweight data like geometric shapes, coordinates, or configuration settings
+- Structs are best suited for small, immutable, and performance-critical data
+- structs can't inherit from other structs or classes, but they can implement interfaces
+  - If your type focuses on behavior rather than data, classes are often a better choice due to their reference semantics
+- Encapsulation allows you to control access to the data within a struct. Use access modifiers like `private`, `public`, or `internal` to specify accessibility
+- When you apply the `readonly` modifier to a struct, you can enforce immutability
+
+### record
+
+```cs
 public record Product(string Name, decimal Price)
 {
     public override int GetHashCode() => HashCode.Combine(Name.ToLower(), Price);
@@ -734,19 +770,7 @@ var dog = new Dog("Buddy", "Golden Retriever");
 Console.WriteLine(dog); // Output: Dog { Name = Buddy, Breed = Golden Retriever }
 ```
 
-- Use `enums` in C# to define named constants and prevent invalid values.
-- Work with `structs` in C# to encapsulate related data into lightweight containers.
 - Create `records` in C# to model immutable data and ensure consistency.
-- By default, the underlying type of an `enum` is `int`, and the values start at `0`, incrementing by 1 for each member
-- Use singular nouns for simple enums and plural nouns for flag enums (?)
-- Provide a value of zero for simple enums, typically named `None`.
-- Structs are value types in C#: they directly store their data rather than referencing it
-- Structs are commonly used for representing lightweight data like geometric shapes, coordinates, or configuration settings
-- Structs are best suited for small, immutable, and performance-critical data
-- structs can't inherit from other structs or classes, but they can implement interfaces
-  - If your type focuses on behavior rather than data, classes are often a better choice due to their reference semantics
-- Encapsulation allows you to control access to the data within a struct. Use access modifiers like `private`, `public`, or `internal` to specify accessibility
-- When you apply the `readonly` modifier to a struct, you can enforce immutability
 - Records in C# provide a way to create immutable data models with value-based equality
 - Records automatically generate properties, constructors, and methods like ToString, Equals, and GetHashCode.
 - Records are useful for scenarios like modeling API responses, configuration settings, or logging events where immutability and simplicity are critical
@@ -759,6 +783,148 @@ Console.WriteLine(dog); // Output: Dog { Name = Buddy, Breed = Golden Retriever 
 - Records are ideal for representing immutable data
 
 > `records` are really confusing!
+
+<br>
+
+## Generics and anonymous types
+
+```cs
+// T is the type parameter: Box<int>,  Box<string>, etc
+public class Box<T>
+{
+    public T Item { get; set; }
+
+    public void AddItem(T item)
+    {
+        Item = item;
+    }
+}
+
+// This generic method retrieves the first item from a list of any type
+public T GetFirstItem<T>(List<T> items)
+{
+    return items[0];
+}
+
+List<string> names = new List<string> {"Hannah", "Mario"};
+string firstName = GetFirstItem(names);
+Console.WriteLine(firstName);
+```
+
+- When you use generics, the compiler replaces the type parameter with the actual type during compilation, ensuring type safety and avoiding runtime errors.
+- Think of `T` as a "placeholder" for the type you want to use. It makes your code flexible and reusable.
+- Generic classes and methods are commonly used with collections, such as `List<T>` and `Dictionary<TKey, TValue>`
+
+### generic interfaces
+
+```cs
+// generic interfaces
+public class Product : IComparable<Product>
+{
+    public string Name { get; set; }
+    public decimal Price { get; set; }
+
+    public int CompareTo(Product other)
+    {
+        return Price.CompareTo(other.Price);
+    }
+}
+
+// example of using IComparer<T> to sort a list of products
+// implements IComparer<Product> to sort products by price
+public class ProductComparer : IComparer<Product>
+{
+    public int Compare(Product x, Product y)
+    {
+        return x.Price.CompareTo(y.Price);
+    }
+}
+
+var products = new List<Product>
+{
+    new Product { Name = "Laptop", Price = 1200 },
+    new Product { Name = "Tablet", Price = 600 }
+};
+
+products.Sort(new ProductComparer());
+```
+
+- Generic interfaces are a key feature of advanced generics, allowing you to define type-safe contracts for implementing classes
+- Some commonly used generic interfaces in .NET include:
+  - `IEnumerable<T>`: Represents a collection of objects that can be enumerated
+  - `IComparer<T>`: Defines a custom comparison for sorting objects
+  - `IEqualityComparer<T>`: Defines custom equality logic for comparing objects
+
+> Skip Generic math
+
+### Covariance & Contravariance
+
+```cs
+IEnumerable<string> strings = new List<string>();
+// Covariance: string is a more specific type than object:
+IEnumerable<object> objects = strings;
+
+Action<object> handleObject = obj => Console.WriteLine(obj);
+// Contravariance: object is a more general type than string:
+Action<string> handleString = handleObject;
+```
+
+- Covariance: Allows you to assign a more specific type (derived type) to a more general type (base type).
+  - Think of it like storing a collection of apples (`IEnumerable<Apple>`) in a basket that can hold any fruit (`IEnumerable<Fruit>`).
+- Contravariance: Allows you to assign a more general type (base type) to a more specific type (derived type).
+  - Think of it like using a handler for any fruit (`Action<Fruit>`) to process only apples (`Action<Apple>`).
+
+### Anonymous types
+
+```cs
+var v = new { Amount = 108, Message = "Hello" };
+Console.WriteLine($"{v.Amount} - {v.Message}");
+
+// object initializer example
+Cat myCat = new Cat { Name = "Fluffy", Age = 10 };
+// Anonymous Type
+var person = new { Name = "John", Age = 30 };
+
+// how to create an anonymous type
+var product = new { Name = "Laptop", Price = 1200 };
+Console.WriteLine($"Product: {product.Name}, Price: {product.Price}");
+
+// anonymous type used to group data temporarily
+var customer = new { Name = "Mario Rogers", Age = 30 };
+Console.WriteLine($"Customer: {customer.Name}, Age: {customer.Age}");
+```
+
+- Anonymous types in C# let you group related data into a temporary object without defining a full class
+  - They allow you to create objects with read-only properties
+- Anonymous types are created using the `new` operator and object initializers
+  - object initializer: Instead of calling a constructor and then writing multiple assignment statements, you can set properties within a single expression
+- They're commonly used in Language-Integrated Query (LINQ) queries to return subsets of properties from objects
+- Anonymous types can't include methods, events, or null values as property initializers
+- Anonymous types are often declared using implicitly typed variables (`var`)
+- Anonymous types are commonly used in LINQ queries to _project results into objects_ with selected properties (?)
+- Anonymous types allow you to only work with the data you need
+
+```cs
+var products = new[] {
+    new { Name = "Laptop", Price = 1200 },
+    new { Name = "Tablet", Price = 600 }
+};
+
+// This looks like SQL?
+var filteredProducts = from p in products
+                       where p.Price > 1000
+                       select new { p.Name, p.Price };
+
+foreach (var product in filteredProducts)
+{
+    Console.WriteLine($"Name: {product.Name}, Price: {product.Price}");
+}
+```
+
+- The select clause creates instances of anonymous types
+- The query returns an IEnumerable of the anonymous type
+- Anonymous types are internal, so they can't be passed across assembly boundaries
+- Anonymous types and tuple types both allow grouping of related data but differ in usability and performance
 
 <br>
 
