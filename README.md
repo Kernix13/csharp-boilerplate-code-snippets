@@ -667,6 +667,8 @@ foreach (var tag in uniqueTags)
 - `HashSet<T>` ensures that all elements in the collection are unique and _unordered_
 - `HashSet<T>` automatically prevents duplicate entries
 
+<div align="right">&#8673; <a href="#back-to-top" title="Table of Contents">Back to Top</a></div>
+
 <br>
 
 ## Enum and struct and record
@@ -784,6 +786,8 @@ Console.WriteLine(dog); // Output: Dog { Name = Buddy, Breed = Golden Retriever 
 - Records are ideal for representing immutable data
 
 > `records` are really confusing!
+
+<div align="right">&#8673; <a href="#back-to-top" title="Table of Contents">Back to Top</a></div>
 
 <br>
 
@@ -934,6 +938,8 @@ foreach (var product in filteredProducts)
 ```cs
 // code here
 ```
+
+<div align="right">&#8673; <a href="#back-to-top" title="Table of Contents">Back to Top</a></div>
 
 <br>
 
