@@ -25,6 +25,7 @@ Code snippets and important syntax for important code blocks in C#.
 1. [List and HashSet and Dictionary](#list-and-hashset-and-dictionary)
 1. [Enum and struct and record](#enum-and-struct-and-record)
 1. [Generics and anonymous types](#generics-and-anonymous-types)
+1. [Asynchronous programming](#asynchronous-programming)
 1. [Terms or Keywords to learn](#terms-or-keywords-to-learn)
 1. [](#)
 
@@ -925,6 +926,14 @@ foreach (var product in filteredProducts)
 - The query returns an IEnumerable of the anonymous type
 - Anonymous types are internal, so they can't be passed across assembly boundaries
 - Anonymous types and tuple types both allow grouping of related data but differ in usability and performance
+
+<br>
+
+## Asynchronous programming
+
+```cs
+// code here
+```
 
 <br>
 
