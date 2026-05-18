@@ -569,6 +569,8 @@ students.Add(new Student { Name = "Dale", Age = 23 });
 students.RemoveAt(0); // follow this with a foreach block
 ```
 
+- .Add(item), .RemoveAt(index), .Remove(item), .Inset(index, item), .Count(), .IndexOf(item), .LastIndexOf(item), .Contains(item), .Sort(), .Reverse() but it just reverses the list, not reverse sort, .Clear(), ToArray()
+
 ### `Dictionary<T>`
 
 ```cs
@@ -721,8 +723,11 @@ enum ErrorCode : ushort
 
 - Use `enums` in C# to define named constants and prevent invalid values (?)
 - By default, the underlying type of an `enum` is `int`, and the values start at `0`, incrementing by 1 for each member
+  - you must explicity cast to an `(int)` if you want to get the value
 - Use singular nouns for simple enums and plural nouns for flag enums (?)
 - Provide a value of zero for simple enums, typically named `None`.
+
+> Look into the `ToString()` method
 
 ### struct
 
@@ -804,6 +809,8 @@ Console.WriteLine(dog); // Output: Dog { Name = Buddy, Breed = Golden Retriever 
 
 ## Generics and anonymous types
 
+Generics are not specific to any kind of data type
+
 ```cs
 // T is the type parameter: Box<int>,  Box<string>, etc
 public class Box<T>
@@ -825,6 +832,17 @@ public T GetFirstItem<T>(List<T> items)
 List<string> names = new List<string> {"Hannah", "Mario"};
 string firstName = GetFirstItem(names);
 Console.WriteLine(firstName);
+
+// another example
+int[] intArray = {1, 2, 3};
+double[] doubleArray = {1.0, 2.0, 3.0};
+string[] stringArray = {"1", "2", "3"};
+
+public static void DisplayItems<T>(T[] array) {
+    foreach (T item in array) {
+        Console.WriteLine(item);
+    }
+}
 ```
 
 - When you use generics, the compiler replaces the type parameter with the actual type during compilation, ensuring type safety and avoiding runtime errors.
@@ -1051,6 +1069,7 @@ using (HttpClient client = new HttpClient()) {
         var pets = JsonSerializer.Deserialize<List<Pet>>(responseBody);
 
         // Iterate through the list of pets and display their details
+        // Why > 4, and why ToString()
         foreach (var pet in pets) {
             if (pet.id.ToString().Length > 4) {
                 Console.WriteLine($"Pet ID: {pet.id}, Name: {pet.name}");
@@ -1107,6 +1126,20 @@ The `HTTPClient` class includes the following asynchronous methods:
 - `PutAsync`: Sends a PUT request to the specified URI with the specified content and returns the response.
 - `DeleteAsync`: Sends a DELETE request to the specified URI and returns the response.
 - `SendAsync`: Sends an HTTP request message and returns the response.
+
+Miscellaneous
+
+- Thread.Sleep(ms)
+- the main thread
+
+```cs
+Thread thread1 = new Thread(MethodName);
+Thread thread2 = new Thread(MethodName2);
+thread1.Start();
+thread2.Start();
+// or if param in method
+Thread thread1 = new Thread(() => MethodName(arg));
+```
 
 <div align="right">&#8673; <a href="#back-to-top" title="Table of Contents">Back to Top</a></div>
 
