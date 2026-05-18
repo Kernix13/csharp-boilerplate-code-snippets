@@ -14,7 +14,9 @@ Code snippets and important syntax for important code blocks in C#.
 1. [Loop examples](#loop-examples)
 1. [Conditionals](#conditionals)
 1. [String methods](#string-methods)
+1. [Math methods](#math-methods)
 1. [Array syntax](#array-syntax)
+1. [List methods](#list-methods)
 1. [Exceptions and errors](#exceptions-and-errors)
 1. [Methods](#methods)
 1. [Classes](#classes)
@@ -176,17 +178,53 @@ switch (product[1])
 
 ```cs
 // Split a string by each character
-char[] chars = someString.ToCharArray();
+char[] chars = str.ToCharArray();
 
 // Split a string but not by character
-string[] words = someString.Split(' ');
+string[] words = str.Split(' ');
 
-// other methods
-someStr.Remove("sub")
-someStr.Substring("sub")
-someStr.TrimStart()
-someStr.IndexOf(i)
-someStr.Trim()
+// other methods and properties
++=
+str.Length;
+str[i];
+str + str2;
+
+str.ToLower();
+str.ToUpper();
+str.Split(sep);
+str.Remove(start, len);
+str.Substring("sub");
+str.TrimStart();
+str.IndexOf(val);
+str.LastIndexOf(val);
+str.Trim();
+str.EndsWith(val);
+str.Replace("old", "new");
+str.Replace("old", "");
+str.Insert(i, val);
+
+str.StartsWith(sub);
+str.EndsWith(sub);
+str.Contains(sub);
+```
+
+<div align="right">&#8673; <a href="#back-to-top" title="Table of Contents">Back to Top</a></div>
+
+## Math methods
+
+```cs
+Math.Abs(num)
+Math.Max(num1, num2)
+Math.Min(num1, num2)
+MAth.Pow(num, exp)
+Math.Sqrt(num)
+Math.Round(num)
+Math.Ceiling(num)
+Math.Floor(num)
+
+Random random = new Random();
+int num = random.Next(1, 7);
+double num = random.NextDouble(); // between 0 and 1
 ```
 
 <div align="right">&#8673; <a href="#back-to-top" title="Table of Contents">Back to Top</a></div>
@@ -216,6 +254,30 @@ Array.Reverse(someArray);
 // Join array elements into a string
 String.Join("delimiter", someArray);
 ```
+
+<br>
+
+## List methods
+
+```cs
+list1.Length
+list1.Count
+list1[i]
+list1[i] = item
+var list2 = new List<T>(list1)
+str.Join(sep, list1)
+list1.Concat(list2).ToList()
+list1.IndexOf(item)
+list1.Clear()
+list1.Add(item)
+list1.Insert(i, item)
+list1.Remove(x)
+list1.RemoveAt(0)
+list1.Reverse()
+list1.Sort()
+```
+
+<div align="right">&#8673; <a href="#back-to-top" title="Table of Contents">Back to Top</a></div>
 
 <br>
 
