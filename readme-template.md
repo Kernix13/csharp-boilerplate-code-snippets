@@ -4,13 +4,13 @@ Intro paragraph here, between 120-158 characters
 
 <!-- Google: "sample readme for a c# console application" for good boilerplate -->
 
-<br>
+<span aria-hidden="true"><br></span>
 
 ## Overview
 
 More in-depth description of the project than the intro paragraph
 
-<br>
+<span aria-hidden="true"><br></span>
 
 ## Prerequisites
 
@@ -50,7 +50,7 @@ cd REPO_NAME
 dotnet run
 ```
 
-<br>
+<span aria-hidden="true"><br></span>
 
 > Other H2 & H3 sections that make sense for console projects:
 > See [csharp-template.md](https://github.com/Kernix13/cy-pathway-readmes/blob/main/csharp-template.md) for more sections if your console app has more features to it.
