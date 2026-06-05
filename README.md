@@ -1261,6 +1261,19 @@ Thread thread1 = new Thread(() => MethodName(arg));
 
 ## LINQ
 
+JavaScript array methods that are the same as Linq methods:
+
+- `.filter()` -> `.Where()`
+- `.map()` -> `.Select()`
+- `.sort()` -> `.OrderBy()` / `.OrderByDescending()`
+- `.find()` -> `.FirstOrDefault()`
+- `.some()` -> `.Any()`
+- `.every()` -> `.All()`
+- `.includes()` -> `.Contains()`
+- `.length` -> `.Count()`
+- `.reduce()` -> `.Aggregate()`
+- `.slice()` -> `.Skip()` / `.Take()`
+
 ```cs
 // code below would be in a file named Person.cs
 namespace Sandbox;
