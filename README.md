@@ -1262,7 +1262,7 @@ Thread thread1 = new Thread(() => MethodName(arg));
 ## LINQ
 
 ```cs
-// in Person.cs
+// code below would be in a file named Person.cs
 namespace Sandbox;
 
 public class Person
