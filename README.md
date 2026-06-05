@@ -28,8 +28,8 @@ Code snippets and important syntax for important code blocks in C#.
 1. [Enum and struct and record](#enum-and-struct-and-record)
 1. [Generics and anonymous types](#generics-and-anonymous-types)
 1. [Asynchronous programming](#asynchronous-programming)
+1. [LINQ](#linq)
 1. [Terms or Keywords to learn](#terms-or-keywords-to-learn)
-1. [](#)
 
 <br>
 
