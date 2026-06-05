@@ -337,6 +337,7 @@ void MethodName(string paramName, string param2 = "Hello") {
 ```cs
 // remember to add namespace
 namespace ProjectName;
+
 // in Program.cs:
 using ProjectName;
 
@@ -378,7 +379,7 @@ public string FullAddress => HomeAddress.FormatAddress();
 
 <div align="right">&#8673; <a href="#back-to-top" title="Table of Contents">Back to Top</a></div>
 
-## OOP examples
+## OOP examples: interfaces and inheritance
 
 See [csharp-oop-interface-inheritance](https://github.com/Kernix13/csharp-oop-interface-inheritance) for detailed notes.
 
@@ -484,9 +485,50 @@ if (user is NewUser CurrentUser) {
 See [csharp-system-io-classes](https://github.com/Kernix13/csharp-system-io-classes) for examples of Path, Directory, FileInfo, and File examples in `Program.cs` and in `README.md`.
 
 ```cs
-// Add examples for StreamReader and StreamWriter later
+/* 1️⃣ Directory */
+// 1. Determine the current directory
+Console.WriteLine($"1. CURRENT DIRECTORY: {Directory.GetCurrentDirectory()}");
 
-// Add examples for things like File.ReadAllText & File.WriteAllText
+// 2. Loop through files
+IEnumerable<string> files = Directory.EnumerateFiles(Directory.GetCurrentDirectory());
+Console.WriteLine("3. LOOP THRU FILES & GET FULL FILE PATH:");
+foreach (var file in files)
+{
+    // Outputs full path to a file
+    Console.WriteLine(file);
+}
+
+// 3. Check if a directory exists using Directory.Exists(folderName)
+string currDir = Directory.GetCurrentDirectory();
+char sep = Path.DirectorySeparatorChar;
+bool doesDirectoryExist = Directory.Exists($"{currDir}{sep}data");
+
+/* 2️⃣ Directory + Path */
+// 4. Create a new folder using Directory.CreateDirectory(folderName)
+string currDir = Directory.GetCurrentDirectory();
+Directory.CreateDirectory(Path.Combine(currDir, "data"));
+
+/* 3️⃣ FileInfo */
+// 5. FileInfo(fileName)
+FileInfo info = new FileInfo("users.json");
+Console.WriteLine("8. FileInfo (5 properties):");
+Console.WriteLine($"FullName: {info.FullName}\nName: {info.Name}\nDirectory: {info.Directory}\nCreationTime: {info.CreationTime}");
+
+/* 4️⃣ File + Path */
+// 6. Create a file using File.WriteAllText(fileName, text)
+File.WriteAllText(Path.Combine(currDir, "text.txt"), "Testing File.WriteAllText");
+
+// 7. Read data from files using File.ReadAllText(fileName)
+string text = File.ReadAllText(Path.Combine(currDir, "text.txt"));
+Console.WriteLine("7. File.ReadAllText (text.txt):");
+Console.WriteLine(text);
+
+// 8. Append data to files
+var appendedText = "Added using File.AppendAllText";
+File.AppendAllText(Path.Combine(currDir, "text.txt"), $"{Environment.NewLine}{appendedText}");
+string newText = File.ReadAllText(Path.Combine(currDir, "text.txt"));
+Console.WriteLine("15. File.AppendAllText (text.txt):");
+Console.WriteLine(newText);
 ```
 
 <br>
@@ -793,6 +835,9 @@ enum ErrorCode : ushort
 
 ### struct
 
+> Skip structs
+
+<!--
 ```cs
 public struct Point
 {
@@ -832,6 +877,7 @@ public struct Rectangle
 - When you apply the `readonly` modifier to a struct, you can enforce immutability
 
 > Structs are worth diving deeper into and incorporating into a project
+-->
 
 ### record
 
@@ -955,6 +1001,8 @@ products.Sort(new ProductComparer());
 > Skip Generic math
 
 ### Covariance & Contravariance
+
+> Skip this section
 
 ```cs
 IEnumerable<string> strings = new List<string>();
@@ -1107,8 +1155,12 @@ public class Program
         return JsonSerializer.Deserialize<Account>(jsonString);
     }
 }
+```
 
-// Code that demonstrates the use of asynchronous REST API calls in C#
+Code that demonstrates the use of asynchronous REST API calls in C#.
+
+```cs
+
 using System;
 using System.ComponentModel; // what is this
 using System.Net.Http;
@@ -1189,6 +1241,8 @@ The `HTTPClient` class includes the following asynchronous methods:
 - `DeleteAsync`: Sends a DELETE request to the specified URI and returns the response.
 - `SendAsync`: Sends an HTTP request message and returns the response.
 
+> For better HttpClient and API usage, see my repos [csharp-async-httpclient-example](https://github.com/Kernix13/csharp-async-httpclient-example) and [csharp-coingecko-api](https://github.com/Kernix13/csharp-coingecko-api).
+
 Miscellaneous
 
 - Thread.Sleep(ms)
@@ -1201,6 +1255,14 @@ thread1.Start();
 thread2.Start();
 // or if param in method
 Thread thread1 = new Thread(() => MethodName(arg));
+```
+
+<div align="right">&#8673; <a href="#back-to-top" title="Table of Contents">Back to Top</a></div>
+
+## LINQ
+
+```cs
+// common Linq methods here
 ```
 
 <div align="right">&#8673; <a href="#back-to-top" title="Table of Contents">Back to Top</a></div>

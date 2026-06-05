@@ -24,7 +24,7 @@ More in-depth description of the project than the intro paragraph
 1. Clone this repository and switch into project folder
 
    ```sh
-   git clone https://github.com/USER_NAME/REPO_NAME
+   git clone https://github.com/USER_NAME/REPO_NAME.git
    cd REPO_NAME
    ```
 
@@ -45,7 +45,7 @@ More in-depth description of the project than the intro paragraph
 <!-- I t hink h3 elements should have an emoji/icon at the beginning -->
 
 ```sh
-git clone https://github.com/USER_NAME/REPO_NAME
+git clone https://github.com/USER_NAME/REPO_NAME.git
 cd REPO_NAME
 dotnet run
 ```
