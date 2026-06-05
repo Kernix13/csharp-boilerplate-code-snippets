@@ -1262,7 +1262,129 @@ Thread thread1 = new Thread(() => MethodName(arg));
 ## LINQ
 
 ```cs
-// common Linq methods here
+// in Person.cs
+namespace Sandbox;
+
+public class Person
+{
+    public string Name { get; set; } = string.Empty;
+    public int Age { get; set; }
+    public string Dept { get; set; } = string.Empty;
+    public int yrsExperience { get; set; }
+}
+
+// In Program.cs
+using System.Linq;
+using System.Collections.Generic;
+
+using Sandbox;
+
+List<Person> people = new()
+{
+    new Person { Name = "Alice", Age = 25, Dept = "Marketing", yrsExperience = 3 },
+    new Person { Name = "Bob", Age = 42, Dept = "Sales", yrsExperience = 5 },
+    new Person { Name = "Charlie", Age = 31, Dept = "Marketing", yrsExperience = 2 },
+    new Person { Name = "David", Age = 42, Dept = "IT", yrsExperience = 7 },
+    new Person { Name = "Eve", Age = 21, Dept = "Sales", yrsExperience = 1 },
+    new Person { Name = "Frank", Age = 31, Dept = "IT", yrsExperience = 4 }
+};
+
+/* Linq methods */
+/* These return IEnumerable<T> */
+// Add .ToList() when you actually want a List<T>. Otherwise, leave it off.
+// 1. Where
+var seniorEmployees = people
+    .Where(p => p.Age >= 30)
+    .ToList();
+
+// 2. Select
+var names = people
+    .Select(p => p.Name)
+    .ToList();
+
+// Where + Select
+var names2 = people
+    .Where(p => p.Age >= 30)
+    .Select(p => p.Name)
+    .ToList();
+
+// 3. OrderBy / OrderByDescending
+var youngestFirst = people
+    .OrderBy(p => p.Age)
+    .ToList();
+var oldestFirst = people
+    .OrderByDescending(p => p.Age)
+    .ToList();
+
+// Where + OrderBy
+var salesPeople = people
+    .Where(p => p.Dept == "Sales")
+    .OrderBy(p => p.Name)
+    .ToList();
+
+// Where + OrderBy + Select
+var names3 = people
+    .Where(p => p.Age >= 30)
+    .OrderBy(p => p.Name)
+    .Select(p => p.Name)
+    .ToList();
+
+// 4. Take
+var firstThree = people
+    .Take(3)
+    .ToList();
+
+// 5. Skip
+var remaining = people
+    .Skip(3)
+    .ToList();
+
+// Skip + Take
+var page = people
+    .Skip(10)
+    .Take(5)
+    .ToList();
+
+// 6. Distinct
+var departments = people
+    .Select(p => p.Dept)
+    .Distinct()
+    .ToList();
+
+// 7. GroupBy + ThenBy
+var groups = people
+    .GroupBy(p => p.Dept)
+    .ToList();
+var sorted = people
+    .OrderBy(p => p.Dept)
+    .ThenBy(p => p.Name)
+    .ToList();
+
+/* These return a single value. These end the query and produce a value. */
+// 8. FirstOrDefault
+var firstSalesPerson = people.FirstOrDefault(p => p.Dept == "Sales");
+
+// 9. Any
+bool hasMarketing = people.Any(p => p.Dept == "Marketing");
+
+// 10. All
+bool allAdults = people.All(p => p.Age >= 18);
+
+// 11. Count
+int salesCount = people.Count(p => p.Dept == "Sales");
+
+// Also consider Min, Max, Sum, Average
+
+// 12. Aggregate
+
+// 13. Contains
+List<string> names4 =
+[
+    "Alice",
+    "Bob",
+    "Charlie"
+];
+bool hasBob = names.Contains("Bob");
 ```
 
 <div align="right">&#8673; <a href="#back-to-top" title="Table of Contents">Back to Top</a></div>
