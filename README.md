@@ -29,6 +29,8 @@ Code snippets and important syntax for important code blocks in C#.
 1. [Generics and anonymous types](#generics-and-anonymous-types)
 1. [Asynchronous programming](#asynchronous-programming)
 1. [LINQ](#linq)
+1. [Unit tests](#unit-tests)
+1. [Building a Web API](#building-a-web-api)
 1. [Terms or Keywords to learn](#terms-or-keywords-to-learn)
 
 <br>
@@ -1402,15 +1404,44 @@ bool hasBob = names.Contains("Bob");
 
 <div align="right">&#8673; <a href="#back-to-top" title="Table of Contents">Back to Top</a></div>
 
+## Unit tests
+
+```cs
+// code here
+```
+
+<div align="right">&#8673; <a href="#back-to-top" title="Table of Contents">Back to Top</a></div>
+
+## Building a Web API
+
+```cs
+// code here
+```
+
+<div align="right">&#8673; <a href="#back-to-top" title="Table of Contents">Back to Top</a></div>
+
 <br>
 
-## Terms or Keywords to learn
+## Terms or Keywords to learn or use
 
-> This section is old - update it!
-
-- `void`
-- `static`
-- `!` (null-conditional operator)
-- `new string[#]` or `new int[#]`
+- Jagged arrays
+- `??`: null-coalescing operator - work this into my code more
+- `static` properties
+- `private` properties
+- `readonly` properties
+- `virtual` keyword for methods
+- `abstract` keyword for methods
+- `override` keyword for methods
+- `params` keyword
+- `this` keyword
+- `base` keyword and `base()`
+- `JsonSerializerOptions`
+- `[JsonIgnore]`
+- `required` modifier
+- `using System.ComponentModel;`
+- `HttpResponseMessage`
+- `EnsureSuccessStatusCode`
+- `.Content.ReadAsStringAsync`
+- `JsonNamingPolicy`
 
 <div align="right">&#8673; <a href="#back-to-top" title="Table of Contents">Back to Top</a></div>
