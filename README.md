@@ -27,6 +27,7 @@ Code snippets and important syntax for important code blocks in C#.
 1. [List and HashSet and Dictionary](#list-and-hashset-and-dictionary)
 1. [Enum and struct and record](#enum-and-struct-and-record)
 1. [Generics and anonymous types](#generics-and-anonymous-types)
+1. [Attributes](#attributes)
 1. [Asynchronous programming](#asynchronous-programming)
 1. [LINQ](#linq)
 1. [Unit tests](#unit-tests)
@@ -64,7 +65,11 @@ dotnet new gitignore
 ## Miscellaneous
 
 ```cs
+Console.WriteLine("New line");
+Console.Write("Same line");
+
 // Option 1: nullable reference type / nullable annotation
+Console.Write("Enter your name: ");
 string? name = Console.ReadLine();
 if (name is null) // Input stream ends (EOF = End Of File)
 
@@ -79,10 +84,41 @@ int divisor = int.Parse(Console.ReadLine()!);
 decimal temp = 34.4m;
 decimal decimalQuotient = 7.0m / 5;
 
-// need a float example
-float money = 1234.85f; // weak!
+// float example
+float money = 1234.85f;
 
-Console.ReadLine()
+string text = "Hello";
+char letter = 'A';
+bool isTrue = true;
+
+// Declaration then assignment
+int score;
+score = 100;
+
+/* Latest language enhancements and syntax improvements: */
+// Global using (C# 10)
+global using System;
+global using System.Collections.Generic;
+
+// File-scoped namespace (C# 10)
+namespace MyApp.Services;
+
+// Raw string literals (C# 11)
+string json = """
+{
+    "name": "John",
+    "age": 30
+}
+""";
+
+// Required members (C# 11)
+public class Person
+{
+    public required string Name { get; init; }
+}
+
+// Collection expressions (C# 12)
+int[] numbers = [1, 2, 3, 4, 5];
 ```
 
 <div align="right">&#8673; <a href="#back-to-top" title="Table of Contents">Back to Top</a></div>
@@ -100,12 +136,20 @@ Console.ReadLine()
 ## Loop examples
 
 ```cs
+// for loop
+for (int i = 0; i <= someArray.Length; i++) {
+  // code here
+}
+
+// foreach loop
 foreach (dataType name in names) {
   // code here
 }
 
-for (int i = 0; i <= someArray.Length; i++) {
-  // code here
+int[] numbers = { 1, 2, 3, 4, 5 };
+foreach (int num in numbers)
+{
+    Console.WriteLine(num);
 }
 
 for (const str of myStrings) {
@@ -157,6 +201,7 @@ if (condition)
 
 // Conditional operator
 // if true ? do this : else do this
+string status = age >= 18 ? "Adult" : "Minor";
 Console.WriteLine(1 > 0 ? true : false);
 
 // switch
@@ -299,6 +344,10 @@ catch (Exception ex)
 {
     // code to run in the event of an exception
 }
+finally
+{
+    Console.WriteLine("Cleanup");
+}
 
 // Specific exception example
 try
@@ -330,6 +379,44 @@ int MethodName(int paramName) {
 void MethodName(string paramName, string param2 = "Hello") {
     /* logic here */
 }
+
+// Simple method
+void SayHello()
+{
+    Console.WriteLine("Hello!");
+}
+
+// Method with parameters
+void Greet(string name)
+{
+    Console.WriteLine($"Hello, {name}!");
+}
+
+// Method with return value
+int Add(int a, int b)
+{
+    return a + b;
+}
+
+// Out parameters (must assign)
+bool TryParse(string input, out int result)
+{
+    return int.TryParse(input, out result);
+}
+
+// Multiple returns with tuples
+(int sum, int product) Calculate(int a, int b)
+{
+    return (a + b, a * b);
+}
+
+// Calling methods
+SayHello();
+Greet("Alice");
+int sum = Add(5, 3);
+
+// Named arguments
+PrintInfo(age: 25, name: "Bob");
 ```
 
 <br>
@@ -354,8 +441,8 @@ public int Name { get; set; }
 // or:
 private string? _name;
 public int Name {
-    get { return age; }
-    set { age = value; }
+    get { return _name; }
+    set { _name = value; }
 }
 
 // initialize automatically implemented properties similarly to fields
@@ -365,14 +452,19 @@ public string FirstName { get; set; } = "FirstName";
 public static int TotalPets { get; private set; }
 
 // public class
-public class MyClass
+public class Person
 {
     public string Name { get; set; }
+    public int Age { get; set; }
     // instance constructor
-    public MyClass(string name) {
+    public Person(string name, int age) {
         Name = name;
+        Age = age;
     }
 }
+
+// usage
+Person person = new Person("Luna", 12);
 
 // method (FullAddress) from another class (Address)
 public Address HomeAddress { get; set; }
@@ -387,6 +479,19 @@ See [csharp-oop-interface-inheritance](https://github.com/Kernix13/csharp-oop-in
 
 ```cs
 namespace ProjectName;
+
+// Simple interface
+public interface IPlayable
+{
+    void Play();
+    void Pause();
+}
+
+public class Video : IPlayable
+{
+    public void Play() => Console.WriteLine("Playing video");
+    public void Pause() => Console.WriteLine("Pausing video");
+}
 
 // interface
 public interface IPerson
@@ -443,6 +548,26 @@ Console.WriteLine(person1.DisplayInfo());
 // Polymorphism via inheritance
 MyClass person2 = new DerivedClass("Buddy", 10);
 Console.WriteLine(person2.DisplayInfo());
+
+// Basic inheritance
+public class Animal
+{
+    public virtual void MakeSound()
+    {
+        Console.WriteLine("Some sound");
+    }
+}
+
+public class Dog : Animal
+{
+    public override void MakeSound()
+    {
+        Console.WriteLine("Woof!");
+    }
+}
+
+// Usage
+Animal myPet = new Dog();
 ```
 
 Use the following access modifiers to specify the accessibility of a type or member when you declare it:
@@ -1002,6 +1127,56 @@ products.Sort(new ProductComparer());
 
 > Skip Generic math
 
+### Attributes
+
+Think of attributes as metadata tags you stick onto your code (like classes, methods, properties, or fields) to give extra information to the compiler, the runtime, or other libraries. They don't change the core logic of your code by themselves, but they tell something else how to treat it.
+
+Without attributes, you'd have to write a lot of repetitive "boilerplate" code to configure how libraries interact with your data. Attributes let you handle configuration declaratively right where the code lives.
+
+We generally use them for three major reasons:
+
+1. Controlling Serialization
+   - `[Serializable]`: This is an older, native .NET attribute. It tells the runtime: it's safe to convert this entire class into a binary stream.
+   - `[JsonIgnore]`: Used by JSON libraries (like System.Text.Json or Json.NET). It tells the serializer, "Even though this property is part of my class, skip it and don't include it in the final JSON string."
+2. Instructing the Compiler or Runtime: to give instructions directly to the C# compiler or the .NET runtime
+   - `[Obsolete]`: Marks a method or class as outdated. If another developer tries to use it, the compiler will pop up a warning (or error) telling them to use something else.
+   - `[Conditional("DEBUG")]`: Tells the compiler to only execute a method if the app is running in Debug mode.
+3. Framework Configuration (Web APIs and Testing)
+   - ASP.NET Core (Web APIs): You use attributes like `[HttpGet]` or `[Route("api/users")]` above a method to tell the framework, "When someone visits this specific URL, run this method."
+   - Unit Testing: Frameworks like xUnit or NUnit use `[Fact]` or `[Test]` to know which methods are actually test cases that need to be executed.
+
+```cs
+// Built-in attributes
+using System;
+using System.Text.Json.Serialization;
+
+[Serializable] // Tells .NET this class can be binary-serialized
+public class UserProfile
+{
+    public string Username { get; set; }
+
+    [JsonIgnore] // Tells JSON serializers to skip this property
+    public string InternalSessionToken { get; set; }
+
+    [Obsolete("Use DisplayNewFormat() instead.")] // Warns other developers
+    public void DisplayOldFormat()
+    {
+        Console.WriteLine(Username);
+    }
+}
+
+// Custom attribute
+[AttributeUsage(AttributeTargets.Property)]
+public class RequiredAttribute : Attribute { }
+
+// Using custom attribute
+public class User
+{
+    [Required]
+    public string Name { get; set; }
+}
+```
+
 ### Covariance & Contravariance
 
 > Skip this section
@@ -1406,8 +1581,52 @@ bool hasBob = names.Contains("Bob");
 
 ## Unit tests
 
+> ...look under the `.NET CLI Tools `or `DevOps/Testing` sections of Microsoft Learn
+
+You do not need Visual Studio or its graphical "Test Explorer" to run tests. The .NET Core CLI was built precisely so you can do everything from a terminal inside VS Code.
+
+xUnit vs NUnit vs MSTest
+
+- xUnit. It is the default choice for modern ASP.NET Core web APIs.
+- It forces good habits because it isolates every single test completely
+
 ```cs
-// code here
+// --- XUNIT STYLE ---
+[Fact]
+public void VerifyDiscount_xUnit() {
+    var result = Calculator.GetDiscount(100);
+    Assert.Equal(20, result);
+}
+
+// --- NUNIT STYLE ---
+[Test]
+public void VerifyDiscount_NUnit() {
+    var result = Calculator.GetDiscount(100);
+    Assert.That(result, Is.EqualTo(20));
+}
+
+// --- MSTEST STYLE ---
+[TestMethod]
+public void VerifyDiscount_MSTest() {
+    var result = Calculator.GetDiscount(100);
+    Assert.AreEqual(20, result);
+}
+```
+
+The 4 Terminal Commands You Need to Know:
+
+```sh
+# 1. Create a new test project (using xUnit as the example):
+dotnet new xunit -o tests/MyWebApi.Tests
+
+# 2. Link your test project to your API project
+dotnet add tests/MyWebApi.Tests/MyWebApi.Tests.csproj reference src/MyWebApi/MyWebApi.csproj
+
+# 3. Run your tests
+dotnet test
+
+# 4. Run tests automatically
+dotnet watch test
 ```
 
 <div align="right">&#8673; <a href="#back-to-top" title="Table of Contents">Back to Top</a></div>
