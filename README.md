@@ -1127,56 +1127,6 @@ products.Sort(new ProductComparer());
 
 > Skip Generic math
 
-### Attributes
-
-Think of attributes as metadata tags you stick onto your code (like classes, methods, properties, or fields) to give extra information to the compiler, the runtime, or other libraries. They don't change the core logic of your code by themselves, but they tell something else how to treat it.
-
-Without attributes, you'd have to write a lot of repetitive "boilerplate" code to configure how libraries interact with your data. Attributes let you handle configuration declaratively right where the code lives.
-
-We generally use them for three major reasons:
-
-1. Controlling Serialization
-   - `[Serializable]`: This is an older, native .NET attribute. It tells the runtime: it's safe to convert this entire class into a binary stream.
-   - `[JsonIgnore]`: Used by JSON libraries (like System.Text.Json or Json.NET). It tells the serializer, "Even though this property is part of my class, skip it and don't include it in the final JSON string."
-2. Instructing the Compiler or Runtime: to give instructions directly to the C# compiler or the .NET runtime
-   - `[Obsolete]`: Marks a method or class as outdated. If another developer tries to use it, the compiler will pop up a warning (or error) telling them to use something else.
-   - `[Conditional("DEBUG")]`: Tells the compiler to only execute a method if the app is running in Debug mode.
-3. Framework Configuration (Web APIs and Testing)
-   - ASP.NET Core (Web APIs): You use attributes like `[HttpGet]` or `[Route("api/users")]` above a method to tell the framework, "When someone visits this specific URL, run this method."
-   - Unit Testing: Frameworks like xUnit or NUnit use `[Fact]` or `[Test]` to know which methods are actually test cases that need to be executed.
-
-```cs
-// Built-in attributes
-using System;
-using System.Text.Json.Serialization;
-
-[Serializable] // Tells .NET this class can be binary-serialized
-public class UserProfile
-{
-    public string Username { get; set; }
-
-    [JsonIgnore] // Tells JSON serializers to skip this property
-    public string InternalSessionToken { get; set; }
-
-    [Obsolete("Use DisplayNewFormat() instead.")] // Warns other developers
-    public void DisplayOldFormat()
-    {
-        Console.WriteLine(Username);
-    }
-}
-
-// Custom attribute
-[AttributeUsage(AttributeTargets.Property)]
-public class RequiredAttribute : Attribute { }
-
-// Using custom attribute
-public class User
-{
-    [Required]
-    public string Name { get; set; }
-}
-```
-
 ### Covariance & Contravariance
 
 > Skip this section
@@ -1251,6 +1201,58 @@ foreach (var product in filteredProducts)
 - The query returns an IEnumerable of the anonymous type
 - Anonymous types are internal, so they can't be passed across assembly boundaries
 - Anonymous types and tuple types both allow grouping of related data but differ in usability and performance
+
+<br>
+
+## Attributes
+
+Think of attributes as metadata tags you stick onto your code (like classes, methods, properties, or fields) to give extra information to the compiler, the runtime, or other libraries. They don't change the core logic of your code by themselves, but they tell something else how to treat it.
+
+Without attributes, you'd have to write a lot of repetitive "boilerplate" code to configure how libraries interact with your data. Attributes let you handle configuration declaratively right where the code lives.
+
+We generally use them for three major reasons:
+
+1. Controlling Serialization
+   - `[Serializable]`: This is an older, native .NET attribute. It tells the runtime: it's safe to convert this entire class into a binary stream.
+   - `[JsonIgnore]`: Used by JSON libraries (like System.Text.Json or Json.NET). It tells the serializer, "Even though this property is part of my class, skip it and don't include it in the final JSON string."
+2. Instructing the Compiler or Runtime: to give instructions directly to the C# compiler or the .NET runtime
+   - `[Obsolete]`: Marks a method or class as outdated. If another developer tries to use it, the compiler will pop up a warning (or error) telling them to use something else.
+   - `[Conditional("DEBUG")]`: Tells the compiler to only execute a method if the app is running in Debug mode.
+3. Framework Configuration (Web APIs and Testing)
+   - ASP.NET Core (Web APIs): You use attributes like `[HttpGet]` or `[Route("api/users")]` above a method to tell the framework, "When someone visits this specific URL, run this method."
+   - Unit Testing: Frameworks like xUnit or NUnit use `[Fact]` or `[Test]` to know which methods are actually test cases that need to be executed.
+
+```cs
+// Built-in attributes
+using System;
+using System.Text.Json.Serialization;
+
+[Serializable] // Tells .NET this class can be binary-serialized
+public class UserProfile
+{
+    public string Username { get; set; }
+
+    [JsonIgnore] // Tells JSON serializers to skip this property
+    public string InternalSessionToken { get; set; }
+
+    [Obsolete("Use DisplayNewFormat() instead.")] // Warns other developers
+    public void DisplayOldFormat()
+    {
+        Console.WriteLine(Username);
+    }
+}
+
+// Custom attribute
+[AttributeUsage(AttributeTargets.Property)]
+public class RequiredAttribute : Attribute { }
+
+// Using custom attribute
+public class User
+{
+    [Required]
+    public string Name { get; set; }
+}
+```
 
 <br>
 
