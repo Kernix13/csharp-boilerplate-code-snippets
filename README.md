@@ -1583,12 +1583,31 @@ bool hasBob = names.Contains("Bob");
 
 ## Unit tests
 
+Types of tests in automated testing:
+
+1. Unit: test a unit (or multiple units) of the app WITHOUT their external dependencies (files, DBs, etc)
+2. Integration: tests te app WITH its external dependencies - take longer (read/write to DB) but give you more confidence than unit tests
+   - tests a few classes as a whole
+3. End-to-end: drives an app through its UI - gives the greatest amount of confidence about your app but
+
+- Unit tests are great to test conditional statements and loops - and methods with complex calculations and logic
+- Use integration tests for data read / write to database
+- naming convention: `DemoLibrary.Tests`
+
 > ...look under the `.NET CLI Tools `or `DevOps/Testing` sections of Microsoft Learn
 
 You do not need Visual Studio or its graphical "Test Explorer" to run tests. The .NET Core CLI was built precisely so you can do everything from a terminal inside VS Code.
 
 xUnit vs NUnit vs MSTest
 
+- NUnit - one of the earliest
+- MSUnit - microsoft's testing framework built into visual studio
+  - `TestClass`, `TestMethod`
+  - The test runners looks for all TestClass & TestMethod attributes
+- xUnit - popular
+- they all give you:
+  - a framework to write your tests and
+  - a test runner that runs your tests - report Pass/Fail
 - xUnit. It is the default choice for modern ASP.NET Core web APIs.
 - It forces good habits because it isolates every single test completely
 
@@ -1615,7 +1634,125 @@ public void VerifyDiscount_MSTest() {
 }
 ```
 
-The 4 Terminal Commands You Need to Know:
+- inside every test method is 3 parts (triple A)
+  - Arrange: where initialize your objects
+  - Act: where you act on the object (call a method)
+  - Assert: verify the result is correct
+- NOTE: Test Explorer window vs console
+- All your test methods should be `public void`
+- NOTE: You do not have to test EVERYTHING and you do not need every layer of testing - start off small - start with the most complex methods
+
+### MSTest
+
+```cs
+// MSTest
+[TestClass]
+public class ReservationTests {
+  [TestMethod]
+  // public void MethodToTest_Scenario_ExpectedBehavior() {  }
+  public void CanBeCancelledBy_AdminCancelling_ReturnsTrue() {
+    // Arrange
+    var reservation = new Reservation();
+
+    // Act
+    var result = reservation.CanBeCancelledBy(new User { IsAdmin = true });
+
+    // Assert
+    Assert.IsTrue(result);
+  }
+}
+```
+
+### NUnit
+
+- You need to install NuGet packages - make sure you are in the correct folder
+- attribute differences:
+  - [TestFixture]
+  - [Test]
+
+```sh
+dotnet add package NUnit
+dotnet add package NUnit3TestAdapter
+```
+
+- Assert.IsTrue(result); needs to change
+
+```cs
+Assert.That(result, Is.True); // or:
+Assert.That(result == true);
+```
+
+### XUnit
+
+- install: xunit, xunit.runner.console (?)
+
+```cs
+using DemoLibrary;
+namespace DemoLibrary.Tests;
+using Xunit;
+
+public class CalculatorTests {
+
+  [Fact]
+  public void Add_IntegersShouldCalculate() {
+    // Arrange
+    double expected = 5;
+
+    // Act: do the action you are testing
+    double actual = Calculator.Add(3, 2);
+
+    // Assert
+    Assert.Equal(expected, actual);
+  }
+}
+// Tests > Windows > Test Explorer
+```
+
+How to shorten the name that shows in Test Explorer
+
+- in the Solution explorer right-click on DemoLibrary.Tests folder > Add > New Item > search for "json" > click JSON File > rename it to xunit.runner.json > then add the following:
+- Then right-click on the json file > Properties > select Copy to Output > Build
+
+```json
+{
+  "methodDisplay": "method"
+}
+```
+
+- normal: [Fact]
+- instead: [Theory] - allows you to pass in data and run a test multiple times
+- `InlineData`: this allows you to populate the params
+
+```cs
+public class CalculatorTests {
+
+  [Theory]
+  // [InlineData(param1,param2,expected)]
+  [InlineData(4,3,7)]
+  [InlineData(21,5.25,26.25)]
+  public void Add_IntegersShouldCalculate(double x, double y, double expected) {
+    // Arrange
+
+    // Act: do the action you are testing
+    double actual = Calculator.Add(x, y);
+
+    // Assert
+    Assert.Equal(expected, actual);
+  }
+}
+```
+
+Complex methods
+
+- They tend to not be one unit of work - single responsibility - break it up so the method only does one thing
+  - Then test the individual methods not the main method
+- NOTE: Don't test private methods
+- moq, fake, shim framework - File.WriteAllLines - that is MS/C# code - you could write code to pretend to do that
+- You can have more than 1 Assert in a test method but purist say only have 1
+
+<div align="right">&#8673; <a href="#back-to-top" title="Table of Contents">Back to Top</a></div>
+
+## Terminal Commands
 
 ```sh
 # 1. Create a new test project (using xUnit as the example):
