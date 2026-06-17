@@ -10,6 +10,7 @@ Code snippets and important syntax for important code blocks in C#.
 
 1. [Shell commands](#shell-commands)
 1. [Miscellaneous](#miscellaneous)
+1. [Formatting](#formatting)
 1. [Parse, Convert, and Cast](#parse-convert-and-cast)
 1. [Loop examples](#loop-examples)
 1. [Conditionals](#conditionals)
@@ -125,6 +126,83 @@ int[] numbers = [1, 2, 3, 4, 5];
 
 <br>
 
+## Formatting
+
+- You can use composite formatting or string interpolation to format strings.
+- With composite formatting, you use a string template containing one or more replacement tokens in the form `{0}`. You also supply a list of arguments that are matched with the replacement tokens based on their order.
+- Format currency using a `:C` specifier.
+- Format numbers using a `:N` specifier. Control the precision (number of values after the decimal point) using a number after the :N like {myNumber:N3}.
+- Format percentages using the `:P` format specifier.
+- `:F2`: format with 2 decimal places?
+
+Formatting currency
+
+- `:C`: currency format specifier, used to present as currency
+- Notice how adding the `:C` to the tokens inside of the curly braces formats the number as currency regardless of whether you use `int` or `decimal`.
+
+```cs
+decimal price = 123.45m;
+int discount = 50;
+Console.WriteLine($"Price: {price:C} (Save {discount:C})");
+// Price: $123.45 (Save $50.00)
+```
+
+Formatting numbers
+
+When working with numeric data, you might want to format the number for readability by including commas to delineate thousands, millions, billions, and so on.
+
+- By default, the `N` numeric format specifier displays only two digits after the decimal point.
+- If you want to display more precision, you can do that by adding a number after the specifier
+
+The `N` numeric format specifier makes numbers more readable. Update your code as follows:
+
+```cs
+decimal measurement = 123456.78912m;
+Console.WriteLine($"Measurement: {measurement:N} units");
+// Measurement: 123,456.79 units
+
+// add 4 digits after decimal point
+Console.WriteLine($"Measurement: {measurement:N4} units");
+```
+
+Formatting percentages
+
+Use the `P` format specifier to format percentages and rounds to 2 decimal places. Add a number afterwards to control the number of values displayed after the decimal point. Update your code as follows:
+
+```cs
+decimal tax = .36785m;
+Console.WriteLine($"Tax rate: {tax:P2}");
+// Tax rate: 36.79%
+```
+
+```cs
+int invoiceNumber = 1201;
+decimal productShares = 25.4568m;
+decimal subtotal = 2750.00m;
+decimal taxPercentage = .15825m;
+decimal total = 3185.19m;
+
+Console.WriteLine($"Invoice Number: {invoiceNumber}"); // Invoice Number: 1201
+Console.WriteLine($"Shares: {productShares:N3} Product"); // Shares: 25.457 Product
+Console.WriteLine($"Sub Total: {subtotal:C}"); // Sub Total: $2,750.00
+Console.WriteLine($"Tax: {taxPercentage:P2}"); // Tax: 15.83%
+Console.WriteLine($"Total Billed: {total:C}"); // Total Billed: $3,185.19
+```
+
+_Composite formatting_ uses numbered placeholders within a string. At run time, everything inside the braces is resolved to a value that is also passed in based on their position.
+
+- Externalized Strings: If you are pulling strings from a database or a `.resx` file for Localization (translating your app into different languages), you can't use interpolation because the string isn't "hard-coded." You need string.Format() to plug the values into the translated template at runtime.
+- Complex Templates: If you have a very long, multi-line template that you want to define once and reuse multiple times with different data, `string.Format()` is the tool for the job.
+
+```cs
+string first = "Hello";
+string second = "World";
+string result = string.Format("{0} {1}!", first, second);
+Console.WriteLine(result);
+```
+
+<br>
+
 ## Parse, Convert, and Cast
 
 ```cs
@@ -223,6 +301,17 @@ switch (product[1])
 
 ## String methods
 
+The string data type, literal strings, and variables of type string each implement many helper methods to format, modify, and perform other operations on strings.
+
+- Methods that add blank spaces for formatting purposes (`PadLeft()`, `PadRight()`)
+- Methods that removes whitespace (`Trim()`, `TrimStart()`, `TrimEnd()`)
+- Miscellaneous: `GetHashcode()`, the `Length` property
+- Methods that help you determine what's inside of a string, or even retrieve just a part of the string (`Contains()`, `StartsWith()`, `EndsWith()`, `Substring()`)
+- Methods that change the content of the string by replacing, inserting, or removing parts (`Replace()`, `Insert()`, `Remove()`)
+- Methods that turn a string into an array of strings or characters (`Split()`, `ToCharArray()`)
+
+The PadLeft() method adds blank spaces to the left-hand side of the string so that the total number of characters equals the argument you send it
+
 ```cs
 // Split a string by each character
 char[] chars = str.ToCharArray();
@@ -253,6 +342,14 @@ str.Insert(i, val);
 str.StartsWith(sub);
 str.EndsWith(sub);
 str.Contains(sub);
+```
+
+```cs
+string input = "Pad this";
+Console.WriteLine(input.PadLeft(12));
+Console.WriteLine(input.PadRight(12));
+Console.WriteLine(input.PadLeft(12, '-'));
+Console.WriteLine(input.PadRight(12, '-'));
 ```
 
 <div align="right">&#8673; <a href="#back-to-top" title="Table of Contents">Back to Top</a></div>
@@ -1752,7 +1849,7 @@ Complex methods
 
 <div align="right">&#8673; <a href="#back-to-top" title="Table of Contents">Back to Top</a></div>
 
-## Terminal Commands
+### Terminal Commands
 
 ```sh
 # 1. Create a new test project (using xUnit as the example):
