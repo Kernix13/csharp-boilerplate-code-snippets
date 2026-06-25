@@ -1881,7 +1881,7 @@ Benefits of creating APIs in ASP.NET Core:
 # Option 1: Modern Minimal API
 dotnet new webapi -o MyWebApi
 
-# Option 2: Traditional Controller-Based API
+# Option 2: Traditional Controller-Based API architecture
 dotnet new webapi -controllers -o MyWebApi
 ```
 
