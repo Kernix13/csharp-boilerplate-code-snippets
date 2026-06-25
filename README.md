@@ -1905,6 +1905,11 @@ dotnet new webapi -controllers -o MyWebApi
 ### API controller class attributes:
 
 ```cs
+using Microsoft.AspNetCore.Mvc;
+
+using ContosoPizza.Models;
+using ContosoPizza.Services;
+
 [ApiController]
 [Route("api/[controller]")]
 // [Route("[controller]")]
@@ -1971,6 +1976,8 @@ A Service is a class that holds your business logic.
   - method to add a new pizza object
   - method to delete a pizza object by id
   - method to update a pizza object by id
+
+> See [PizzaService.cs](https://github.com/Kernix13/ContosoPizza/blob/main/Services/PizzaService.cs) for code examples
 
 ### CRUD actions in ASP.NET Core
 
