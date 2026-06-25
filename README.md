@@ -32,7 +32,8 @@ Code snippets and important syntax for important code blocks in C#.
 1. [Asynchronous programming](#asynchronous-programming)
 1. [LINQ](#linq)
 1. [Unit tests](#unit-tests)
-1. [Building a Web API](#building-a-web-api)
+1. [Building a CRUD REST Web API](#building-a-crud-rest-web-api)
+1. [Basic Web Api](#basic-web-api)
 1. [Terms or Keywords to learn](#terms-or-keywords-to-learn)
 
 <br>
@@ -1867,17 +1868,228 @@ dotnet watch test
 
 <div align="right">&#8673; <a href="#back-to-top" title="Table of Contents">Back to Top</a></div>
 
-## Building a Web API
+## Building a CRUD REST Web API
+
+Benefits of creating APIs in ASP.NET Core:
+
+- Endpoints automatically serialize your classes to properly formatted JSON out of the box
+- API endpoints have built-in support for industry-standard JSON Web Tokens (JWTs).
+- ASP.NET lets you define routes and verbs inline with your code by using attributes
+  - Data from the request path, query string, and request body are automatically bound to method parameters
 
 ```sh
-#
+# Option 1: Modern Minimal API
+dotnet new webapi -o MyWebApi
+
+# Option 2: Traditional Controller-Based API
+dotnet new webapi -controllers -o MyWebApi
 ```
+
+- Controller-based API: approach to building APIs in which each endpoint is mapped to a specific controller class
+  - The controller handles the request, performs any necessary business logic, and returns a response
+  - Consists of one or more controller classes that derive from `ControllerBase`
+  - The `ControllerBase` class provides many properties and methods that are useful for handling HTTP requests
+- `Controllers/`: Contains classes with public methods exposed as HTTP endpoints.
+- By convention, controller class names are suffixed with `Controller`
+- A controller is a public class with one or more public methods known as actions
+  - The actions are exposed as HTTP endpoints via routing - inside the web API controller
+  - inherits from the ControllerBase base class, the base class for working with HTTP requests
+  - includes the two standard attributes: [ApiController] and [Route]
+- `[ApiController]` enables opinionated behaviors that make it easier to build web APIs.
+  - Some behaviors include parameter source inference, attribute routing as a requirement, and model validation error-handlingenhancements\*.
+- `[Route]` defines the routing pattern `[controller]`.
+  - the `[Route]` attribute defines a mapping to the [controller] token
+  - The controller's name (case-insensitive, without the Controller suffix) replaces the `[controller]` token
+  - The controller's name (case-insensitive, without the Controller suffix) replaces the `[controller]` token
+
+### API controller class attributes:
 
 ```cs
-// code here
+[ApiController]
+[Route("api/[controller]")]
+// [Route("[controller]")]
+public class PizzaController : ControllerBase
+{
+    public PizzaController()
+    {
+    }
+
+    // GET all action
+
+    // GET by Id action
+
+    // POST action
+
+    // PUT action
+
+    // DELETE action
+}
 ```
 
-### Basic Web Api
+### Http file:
+
+- `.http` file: Contains configuration to test REST APIs directly from VS Code
+  - Click the Sent Request command above the GET which sends a request to the running service
+
+```http
+@ProjectName_HostAddress = http://localhost:5118
+
+###
+GET {{ProjectName_HostAddress}}/api/endpoint/
+Accept: application/json
+```
+
+### Data store and models
+
+You need a model class to represent an object in your inventory. The model contains properties that represent the characteristics of the object. The model is used to pass data in the web API and to persist object options in the data store.
+
+- Model classes can go anywhere in the project, but the `Models` folder is used by convention
+- A model is a set of classes that represent the data that the app manages
+- The model contains properties that represent the characteristics of the object
+- The model is used to pass data in the web API
+
+```cs
+// namespace ProjectName.FolderName;
+namespace ContosoPizza.Models;
+
+public class Pizza
+{
+    public int Id { get; set; }
+    public string? Name { get; set; }
+    public bool IsGlutenFree { get; set; }
+}
+```
+
+### Services
+
+A Service is a class that holds your business logic.
+
+- PizzaService.cs provides a simple in-memory data caching service (for demo purposes)
+  - The constructor creates 2 pizza objects
+  - method to retreive all pizza objects
+  - method to find a pizza by id
+  - method to add a new pizza object
+  - method to delete a pizza object by id
+  - method to update a pizza object by id
+
+### CRUD actions in ASP.NET Core
+
+- GET: Read -> `[HttpGet]`
+- POST: Create -> `[HttpPost]`
+- PUT: Update -> `[HttpPut]`
+- DELETE: Delete -> `[HttpDelete]`
+
+#### GET
+
+The `ActionResult` type is the base class for all action results in ASP.NET Core. It automatically returns data with a Content-Type value of application/json
+
+- The routing logic registers `[HttpGet]` (without id) and `[HttpGet("{id}")]` (with id) as two different routes
+
+```cs
+// controllers/PizzaController.cs
+[HttpGet]
+public ActionResult<List<Pizza>> GetAll() =>
+    PizzaService.GetAll();
+```
+
+#### POST
+
+To enable users to add a new item to the endpoint, you must implement the POST action by using the [HttpPost] attribute.
+
+- The `[HttpPost]` attribute maps HTTP POST requests sent to `http://localhost:5000/api/pizza` by using the `Create()` method
+- This method returns an `IActionResult` response
+- `IActionResult` lets the client know if the request succeeded and provides the ID of the newly created pizza
+- `CreatedAtAction`: uses the action name to generate a location HTTP response header with a URL to the newly created pizza
+- NOTE: Because the controller is annotated with the `[ApiController]` attribute, it's implied that the Pizza parameter will be found in the request body.
+
+```cs
+[HttpPost]
+public IActionResult Create(Pizza pizza)
+{
+    PizzaService.Add(pizza);
+    return CreatedAtAction(nameof(Get), new { id = pizza.Id }, pizza);
+}
+```
+
+#### PUT
+
+Modifying or updating a pizza in our inventory is similar to the POST method that you implemented, but it uses the [HttpPut] attribute and takes in the id parameter in addition to the Pizza object that needs to be updated.
+
+```cs
+[HttpPut("{id}")]
+public IActionResult Update(int id, Pizza pizza)
+{
+    if (id != pizza.Id)
+        return BadRequest();
+
+    var existingPizza = PizzaService.Get(id);
+    if(existingPizza is null)
+        return NotFound();
+
+    PizzaService.Update(pizza);
+
+    return NoContent();
+}
+```
+
+#### DELETE
+
+One of the easier actions to implement is the DELETE action, which takes in just the id parameter of the pizza to remove from the in-memory cache:
+
+```cs
+[HttpDelete("{id}")]
+public IActionResult Delete(int id)
+{
+    var pizza = PizzaService.Get(id);
+
+    if (pizza is null)
+        return NotFound();
+
+    PizzaService.Delete(id);
+
+    return NoContent();
+}
+```
+
+### Methods in Program.cs
+
+```cs
+// Initialize the builder with command-line arguments:
+var builder = WebApplication.CreateBuilder(args);
+
+/* DEPENDENCY INJECTION */
+// Add services: Registers API controllers:
+builder.Services.AddControllers();
+// Generates the data structure:
+builder.Services.AddEndpointsApiExplorer();
+// Creates the webpage UI:
+builder.Services.AddSwaggerGen();
+
+// Build the application instance:
+var app = builder.Build();
+
+/* MIDDLEWARE PIPELINE */
+// Configure HTTP request path
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+// Enable HTTPS redirection middleware
+app.UseHttpsRedirection();
+// Enable authorization in an ASP.NET Core application
+app.UseAuthorization();
+
+// Map Endpoints
+app.MapControllers();
+
+// Start the web application
+app.Run();
+```
+
+<div align="right">&#8673; <a href="#back-to-top" title="Table of Contents">Back to Top</a></div>
+
+## Basic Web Api
 
 I am not interested in building a basic web api but here are the "best of" notes for that.
 
@@ -1922,7 +2134,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Rewrite;
 ```
 
-Middleware:
+#### Middleware:
 
 - Middleware: a piece of code that can run before & after each request is processed
   - Logic that runs on every http request sent to the server
@@ -1941,6 +2153,13 @@ app.Use(async (context, next) =>
     await next(context);
 });
 ```
+
+#### Dependency injection:
+
+- Dependencies: are objects that other objects can depend on
+  - Usually implemented via C# classes and interfaces
+  - Dependencies can also be referred to as Services b\c they are stored in the service container
+  - A Service is a class that holds your business logic
 
 SKIP: Endpoint filters
 
