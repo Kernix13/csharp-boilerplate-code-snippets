@@ -1869,9 +1869,80 @@ dotnet watch test
 
 ## Building a Web API
 
+```sh
+#
+```
+
 ```cs
 // code here
 ```
+
+### Basic Web Api
+
+I am not interested in building a basic web api but here are the "best of" notes for that.
+
+- ASP.NET core: a framework to build web apps, includes middleware, built-in support for building web APIs
+
+```sh
+# Creates a minimal ASP.NET Core application with very little included
+dotnet new web -n ProjectName
+```
+
+```cs
+// Starter code in Program.cs
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+app.MapGet("/", () => "Hello World!");
+
+app.Run();
+```
+
+- Web Application builder: The web application used to configure the HTTP pipeline and routes - provides you with APIs
+- Minimal apis allow you to describe how requests should be processed by a server by using an endpoint
+- There are 3 components for defining how a web request should be handled:
+
+```cs
+//    1     2    3 --------------- |
+app.MapGet("/", () => "Hello World!");
+/*
+  1. The http method: MapGet
+  2. The url route: "/"
+  3. The handler: () => "Hello World!"
+      - executes when an incoming request is processed that matches the method & the route
+*/
+```
+
+- Run dotnet run or click the Play button top right in Program.cs, then open a browser to the API endpoint, or use the `.http` file to send requests
+
+```cs
+// Results needs the following using statement
+using Microsoft.AspNetCore.Http.HttpResults;
+// RewriteOptions needs the following using statement
+using Microsoft.AspNetCore.Rewrite;
+```
+
+Middleware:
+
+- Middleware: a piece of code that can run before & after each request is processed
+  - Logic that runs on every http request sent to the server
+- ASP.NET core has middleware built-in or you can write your own middleware
+- NOTE: middleware is usually registered with the Use keyword - indicates you want to register a middleware
+- `app.Use()`
+  - `context`: represents the current request and response
+  - `next`: to invoke the next middleware
+
+```cs
+// Logger middleware
+app.Use(async (context, next) =>
+{
+    // code here, e.g.
+    Console.WriteLine($"[{context.Request.Method} {context.Request.Path} {DateTime.UtcNow}] started");
+    await next(context);
+});
+```
+
+SKIP: Endpoint filters
 
 <div align="right">&#8673; <a href="#back-to-top" title="Table of Contents">Back to Top</a></div>
 
